@@ -25,29 +25,33 @@ public class Intake {
 
     }
 
-    public void take (boolean isTaking) {
+    public void takeAndGive (boolean isTaking, boolean isGiving) {
 
-        if (isTaking) {
+        if (isTaking && !isGiving) {
             intakeMotor.setPower(0.5);
 
         }
-        else if (!isTaking) {
-            intakeMotor.setPower(0.0);
-
-        }
-    }
-
-    public void give (boolean isGiving) {
-
-        if (isGiving) {
+        else if (!isTaking && isGiving) {
             intakeMotor.setPower(-0.5);
 
         }
-        else if (!isGiving) {
+        else if (!isTaking && !isGiving) {
             intakeMotor.setPower(0.0);
 
         }
     }
+
+//    public void give (boolean isGiving) {
+//
+//        if (isGiving) {
+//            intakeMotor.setPower(-0.5);
+//
+//        }
+//        else if (!isGiving) {
+//            intakeMotor.setPower(0.0);
+//
+//        }
+//    }
 
 
 }

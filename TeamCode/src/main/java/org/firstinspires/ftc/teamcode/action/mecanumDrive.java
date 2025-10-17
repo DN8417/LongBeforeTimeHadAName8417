@@ -50,8 +50,8 @@ public class mecanumDrive {
         imu = hardwareMap.get(IMU.class, "imu");
 
 
-        frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Sets the mode of the motors to run WITHOUT encoders
         frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

@@ -41,11 +41,11 @@ public class Teleop extends OpMode {
         if(mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
-            mecanumDrive.driversideDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_bumper);
+            mecanumDrive.driversideDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x, gamepad1.right_bumper);
             mecanumDrive.telemetryOutput();
 
-            intake.take(gamepad2.right_bumper);
-            intake.give(gamepad2.left_bumper);
+            intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);
+//            intake.give(gamepad2.left_bumper);
 
         } else if (!mode) {
             //Controls for mecanumDrive()
