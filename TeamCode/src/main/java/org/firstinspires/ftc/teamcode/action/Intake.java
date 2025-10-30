@@ -18,7 +18,7 @@ public class Intake {
     private DcMotor intakeMotor;
     private CRServo intakePartTwo;
     private CRServo rubberBandWheel;
-    private CRServo secondRubberBandWheel;
+    //private CRServo secondRubberBandWheel;
     private CRServo smallWheel;
     //private CRServo triggerWheel;
     private DcMotor turretLauncher;
@@ -29,7 +29,7 @@ public class Intake {
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
         rubberBandWheel = hardwareMap.get(CRServo.class, "Rubber Band Wheel");
-        secondRubberBandWheel = hardwareMap.get(CRServo.class, "Second Rubber Band Wheel");
+        //secondRubberBandWheel = hardwareMap.get(CRServo.class, "Second Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         //triggerWheel = hardwareMap.get(CRServo.class, "Trigger Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
@@ -87,12 +87,12 @@ public class Intake {
 
         if (finishesLoading) {
             rubberBandWheel.setPower(-1.00);
-            secondRubberBandWheel.setPower(1.00);
+//            secondRubberBandWheel.setPower(1.00);
 
         }
         else if (!finishesLoading) {
             rubberBandWheel.setPower(0.0);
-            secondRubberBandWheel.setPower(0.0);
+//            secondRubberBandWheel.setPower(0.0);
 
         }
 
