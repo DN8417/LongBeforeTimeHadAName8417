@@ -114,7 +114,7 @@ public class Intake {
     public void launch (boolean bigRedButton) {
 
         if (bigRedButton) {
-            turretLauncher.setPower(-1.0);
+            turretLauncher.setPower(1.0);
 
         }
         else if (!bigRedButton) {
