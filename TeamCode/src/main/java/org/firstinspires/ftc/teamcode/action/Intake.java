@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -18,40 +19,39 @@ public class Intake {
     private DcMotor intakeMotor;
     private CRServo intakePartTwo;
     private CRServo rubberBandWheel;
-    //private CRServo secondRubberBandWheel;
     private CRServo smallWheel;
-    //private CRServo triggerWheel;
     private DcMotor turretLauncher;
-    private Servo turretAngle;
 
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
         rubberBandWheel = hardwareMap.get(CRServo.class, "Rubber Band Wheel");
-        //secondRubberBandWheel = hardwareMap.get(CRServo.class, "Second Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
-        //triggerWheel = hardwareMap.get(CRServo.class, "Trigger Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
-        turretAngle = hardwareMap.get(Servo.class, "Turret Angle");
+
+        turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         turretLauncher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
 
     }
 
-    public void takeAndGive (boolean isTaking, boolean isGiving) {
+    public void takeAndGive (boolean isIntaking, boolean isOutaking) {
 
-        if (isTaking && !isGiving) {
+        if (isIntaking && !isOutaking) {
             intakeMotor.setPower(1.00);
 
         }
-        else if (!isTaking && isGiving) {
+        else if (!isIntaking && isOutaking) {
             intakeMotor.setPower(-1.00);
 
+
         }
-        else if (!isTaking && !isGiving) {
+        else if (!isIntaking && !isOutaking) {
             intakeMotor.setPower(0.0);
 
         }
@@ -87,37 +87,22 @@ public class Intake {
 
         if (finishesLoading) {
             rubberBandWheel.setPower(-1.00);
-//            secondRubberBandWheel.setPower(1.00);
 
         }
         else if (!finishesLoading) {
             rubberBandWheel.setPower(0.0);
-//            secondRubberBandWheel.setPower(0.0);
 
         }
 
     }
 
-    /*public void triggerWheels (float triggerIntaking, float triggerReverse) {
+    public void launch (float bigRedButton) {
 
-        if (triggerIntaking > 0.5) {
-            triggerWheel.setPower(1.00);
-
-        }
-        else if (triggerReverse > 0.5) {
-            triggerWheel.setPower(-1.00);
-
-        }
-
-    }*/
-
-    public void launch (boolean bigRedButton) {
-
-        if (bigRedButton) {
+        if (bigRedButton > 0.5) {
             turretLauncher.setPower(1.0);
 
         }
-        else if (!bigRedButton) {
+        else if (bigRedButton < 0.5) {
             turretLauncher.setPower(0.0);
 
         }

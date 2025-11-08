@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Backup Auto", group ="Mini Autos")
-public class BasicAuto extends LinearOpMode {
+@Autonomous(name="Red Side", group ="Autos")
+public class RedSideAuto extends LinearOpMode {
 
     public DcMotor frontRightDrive;
     public DcMotor frontLeftDrive;
@@ -30,8 +30,8 @@ public class BasicAuto extends LinearOpMode {
 
         waitForStart();
 
-        mecanumDrive(-0.75, 0.75, 0.7, -0.75, 0.35);
         mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.7);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.3);
 
     }
 

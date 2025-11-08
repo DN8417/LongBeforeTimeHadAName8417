@@ -48,8 +48,7 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
-            //intake.triggerWheels(gamepad2.right_trigger, gamepad2.left_trigger);
-            intake.launch(gamepad2.a);
+            intake.launch(gamepad2.left_trigger);
 
         } else if (!mode) {
             //Controls for mecanumDrive()
@@ -61,8 +60,7 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad1.b);
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
-            //intake.triggerWheels(gamepad1.right_trigger, gamepad1.left_trigger);
-            intake.launch(gamepad1.a);
+            intake.launch(gamepad1.left_trigger);
 
         }
 
