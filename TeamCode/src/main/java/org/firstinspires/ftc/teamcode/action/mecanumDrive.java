@@ -48,6 +48,12 @@ public class mecanumDrive {
         frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
     /** Enable or disable slow mode for the wheels.
