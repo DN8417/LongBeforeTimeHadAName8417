@@ -120,5 +120,8 @@ public class mecanumDrive {
         telemetry.addData("Front Right Ticks", frontRightDrive.getCurrentPosition());
         telemetry.addData("Back Left Ticks", backLeftDrive.getCurrentPosition());
         telemetry.addData("Back Right Ticks", backRightDrive.getCurrentPosition());
+
+        telemetry.addData("Perpendicular Wheel", frontLeftDrive.getCurrentPosition());
+        telemetry.addData("Parallel Wheel", frontRightDrive.getCurrentPosition());
     }
 }
