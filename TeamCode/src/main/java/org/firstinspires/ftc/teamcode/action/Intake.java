@@ -22,6 +22,7 @@ public class Intake {
     private DcMotor rubberBandWheel;
     private CRServo smallWheel;
     private DcMotor turretLauncher;
+    private ColorSensor color;
 
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -30,8 +31,11 @@ public class Intake {
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
+        //color = hardwareMap.get(ColorSensor.class, "Color Sensor");
 
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
+        rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         turretLauncher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -86,8 +90,8 @@ public class Intake {
 
     public void finishLoading (boolean finishesLoading) {
 
-        if (finishesLoading) {
-            rubberBandWheel.setPower(-1.00);
+        if (finishesLoading/* && !(color.green() || color.)*/) {
+            rubberBandWheel.setPower(1.00);
 
         }
         else if (!finishesLoading) {
