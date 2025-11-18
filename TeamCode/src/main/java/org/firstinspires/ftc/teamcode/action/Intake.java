@@ -31,7 +31,7 @@ public class Intake {
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
-        //color = hardwareMap.get(ColorSensor.class, "Color Sensor");
+        color = hardwareMap.get(ColorSensor.class, "Color Sensor");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -113,6 +113,13 @@ public class Intake {
         }
 
     }
-    
+
+    public void telemetryOutput() {
+
+        telemetry.addData("Red", color.red());
+        telemetry.addData("Green", color.green());
+        telemetry.addData("Blue", color.blue());
+        telemetry.update();
+    }
 
 }
