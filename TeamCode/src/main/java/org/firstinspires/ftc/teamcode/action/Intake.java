@@ -114,12 +114,12 @@ public class Intake {
 
     }
 
-    public void telemetryOutput() {
-
-        telemetry.addData("Red", color.red());
-        telemetry.addData("Green", color.green());
-        telemetry.addData("Blue", color.blue());
-        telemetry.update();
-    }
+//    public void telemetryOutput() {
+//
+//        telemetry.addData("Red", color.red());
+//        telemetry.addData("Green", color.green());
+//        telemetry.addData("Blue", color.blue());
+//        telemetry.update();
+//    }
 
 }
