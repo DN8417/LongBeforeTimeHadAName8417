@@ -64,9 +64,9 @@ public class RedSideAuto extends LinearOpMode {
         // Moves right again
         mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.4);
         // Turns Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.6);
         // Moves forward and intakes more artifacts
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.00, -1.00, 1.00, -0.5, 0.5);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.00, -1.00, 1.00, -0.5, 0.5);
 
     }
 

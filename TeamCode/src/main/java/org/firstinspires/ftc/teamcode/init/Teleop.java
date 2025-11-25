@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.action.Parking;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
 
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.action.Intake;
 public class Teleop extends OpMode {
     mecanumDrive mecanumDrive = new mecanumDrive();
     Intake intake = new Intake();
+    Parking parking = new Parking();
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
     @Override
@@ -19,12 +21,14 @@ public class Teleop extends OpMode {
         //Initialize our motors
         mecanumDrive.init(this);
         intake.init(this);
+        parking.init(this);
 
     }
 
     public void start() {
         mecanumDrive.runWithoutEncoder();
         intake.init(this);
+        parking.init(this);
 
     }
 
@@ -42,6 +46,7 @@ public class Teleop extends OpMode {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            parking.lifting(gamepad1.b);
             mecanumDrive.telemetryOutput();
 //            intake.telemetryOutput();
 
@@ -55,6 +60,7 @@ public class Teleop extends OpMode {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
             mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
+            parking.lifting(gamepad2.b);
             mecanumDrive.telemetryOutput();
 //            intake.telemetryOutput();
 
