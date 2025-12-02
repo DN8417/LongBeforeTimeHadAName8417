@@ -50,23 +50,29 @@ public class RedSideAuto extends LinearOpMode {
         // Forward again
         mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.3);
         // Turns left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.35);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.3);
         // Buffer time before shooting
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.5);
-        // Shooting first 2 artifacts
+        // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        // Shooting Second artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
+        // Charging up to shoot again
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
-        // Moves right again
+        // Moves right
         mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.4);
         // Turns Right
         mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.6);
         // Moves forward and intakes more artifacts
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.00, -1.00, 1.00, -0.5, 0.5);
+        mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, 0.00, -1.00, 1.00, -0.5, 0.6);
+        // Moves back while still intaking
+        mecanumDrive(0.5, 0.5, 0.5, 0.5, 0.00, 0.00, -1.00, 1.00, -0.5, 0.6);
 
     }
 
