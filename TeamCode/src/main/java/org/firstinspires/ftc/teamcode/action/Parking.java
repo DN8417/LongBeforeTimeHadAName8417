@@ -21,17 +21,17 @@ public class Parking {
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         lifting1 = hardwareMap.get(Servo.class, "Lifting Servo 1");
-        //lifting2 = hardwareMap.get(Servo.class, "Lifting Servo 2");
+        lifting2 = hardwareMap.get(Servo.class, "Lifting Servo 2");
 
-        lifting1.setPosition(0.2);
-        //lifting2.setPosition(0.45);
+        lifting1.setPosition(0.0);
+        lifting2.setPosition(0.0);
     }
 
     public void lifting (boolean readyToPark) {
 
         if (readyToPark) {
-            lifting1.setPosition(0.22);
-            //lifting2.setPosition(0.80);
+            lifting1.setPosition(0.8);
+            lifting2.setPosition(0.8);
 
         }
 

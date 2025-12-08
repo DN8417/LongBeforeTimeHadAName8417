@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.action.ColorSensor;
 import org.firstinspires.ftc.teamcode.action.Parking;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
@@ -14,6 +15,7 @@ public class Teleop extends OpMode {
     mecanumDrive mecanumDrive = new mecanumDrive();
     Intake intake = new Intake();
     Parking parking = new Parking();
+    ColorSensor colorSensor = new ColorSensor();
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
     @Override
@@ -22,6 +24,7 @@ public class Teleop extends OpMode {
         mecanumDrive.init(this);
         intake.init(this);
         parking.init(this);
+        colorSensor.init(this);
 
     }
 
@@ -29,6 +32,7 @@ public class Teleop extends OpMode {
         mecanumDrive.runWithoutEncoder();
         intake.init(this);
         parking.init(this);
+        colorSensor.init(this);
 
     }
 
@@ -73,6 +77,7 @@ public class Teleop extends OpMode {
         }
 
         telemetry.addData("CurrentMode: ", mode ? 0 : 1);
+        colorSensor.getDetectedColor(telemetry);
 
     }
 }

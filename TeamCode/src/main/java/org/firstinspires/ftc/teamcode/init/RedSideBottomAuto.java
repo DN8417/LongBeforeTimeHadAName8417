@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Red Bottom", group ="Autos")
+@Autonomous(name="Red Side Bottom", group ="Autos")
 public class RedSideBottomAuto extends LinearOpMode {
 
     public DcMotor frontRightDrive;
