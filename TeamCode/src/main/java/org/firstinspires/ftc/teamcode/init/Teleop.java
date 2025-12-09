@@ -50,6 +50,8 @@ public class Teleop extends OpMode {
             intake.smallWheelSpin(gamepad2.b);
             intake.launch(gamepad2.left_trigger);
 
+
+
         } else if (!mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);

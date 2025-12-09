@@ -18,7 +18,7 @@ public class Intake {
     Telemetry telemetry;
     private DcMotor intakeMotor;
     private CRServo intakePartTwo;
-    private CRServo rubberBandWheel;
+    private DcMotor rubberBandWheel;
     private CRServo smallWheel;
     private DcMotor turretLauncher;
 
@@ -26,7 +26,7 @@ public class Intake {
         HardwareMap hardwareMap = opMode.hardwareMap;
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
-        rubberBandWheel = hardwareMap.get(CRServo.class, "Rubber Band Wheel");
+        rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
 
