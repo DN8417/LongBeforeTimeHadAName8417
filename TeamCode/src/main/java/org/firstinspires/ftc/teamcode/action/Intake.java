@@ -109,7 +109,7 @@ public class Intake {
 
         }
         else if (bigRedButton < 0.5 && farLaunch > 0.5) {
-            turretLauncher.setPower(1.0);
+            turretLauncher.setPower(0.68);
 
         }
         else if (bigRedButton < 0.5 && farLaunch < 0.5) {
