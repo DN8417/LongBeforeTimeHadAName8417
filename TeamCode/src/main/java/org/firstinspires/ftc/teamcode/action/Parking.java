@@ -27,13 +27,13 @@ public class Parking {
         lifting2.setPosition(0.0);
     }
 
-    public void lifting (boolean readyToPark) {
-
-        if (readyToPark) {
-            lifting1.setPosition(0.8);
-            lifting2.setPosition(0.8);
-
-        }
-
-    }
+//    public void lifting (boolean readyToPark) {
+//
+//        if (readyToPark) {
+//            lifting1.setPosition(0.8);
+//            lifting2.setPosition(0.8);
+//
+//        }
+//
+//    }
 }

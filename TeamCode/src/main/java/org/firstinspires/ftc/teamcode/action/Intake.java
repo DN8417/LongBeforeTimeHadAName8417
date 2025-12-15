@@ -22,6 +22,7 @@ public class Intake {
     private DcMotor rubberBandWheel;
     private CRServo smallWheel;
     private DcMotor turretLauncher;
+    private DcMotor turretMotor;
 
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -30,6 +31,7 @@ public class Intake {
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
+        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -39,6 +41,7 @@ public class Intake {
         turretLauncher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
     }
@@ -99,16 +102,26 @@ public class Intake {
 
     }
 
-    public void launch (float bigRedButton) {
+    public void launch (float bigRedButton, float farLaunch) {
 
-        if (bigRedButton > 0.5) {
+        if (bigRedButton > 0.5 && farLaunch < 0.5) {
+            turretLauncher.setPower(0.5);
+
+        }
+        else if (bigRedButton < 0.5 && farLaunch > 0.5) {
             turretLauncher.setPower(1.0);
 
         }
-        else if (bigRedButton < 0.5) {
+        else if (bigRedButton < 0.5 && farLaunch < 0.5) {
             turretLauncher.setPower(0.0);
 
         }
+
+    }
+
+    public void turretDirection (float movementStick) {
+
+
 
     }
 

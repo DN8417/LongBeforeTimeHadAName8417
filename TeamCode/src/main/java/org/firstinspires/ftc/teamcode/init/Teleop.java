@@ -50,7 +50,7 @@ public class Teleop extends OpMode {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            parking.lifting(gamepad1.b);
+            //parking.lifting(gamepad1.b);
             mecanumDrive.telemetryOutput();
 //            intake.telemetryOutput();
 
@@ -58,13 +58,13 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
-            intake.launch(gamepad2.left_trigger);
+            intake.launch(gamepad2.left_trigger, gamepad2.right_trigger);
 
         } else if (!mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
             mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
-            parking.lifting(gamepad2.b);
+            //parking.lifting(gamepad2.b);
             mecanumDrive.telemetryOutput();
 //            intake.telemetryOutput();
 
@@ -72,7 +72,7 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad1.b);
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
-            intake.launch(gamepad1.left_trigger);
+            intake.launch(gamepad1.left_trigger, gamepad1.right_trigger);
 
         }
 
