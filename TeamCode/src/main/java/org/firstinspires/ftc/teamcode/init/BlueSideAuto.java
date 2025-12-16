@@ -45,31 +45,31 @@ public class BlueSideAuto extends LinearOpMode {
         waitForStart();
 
         // Forward
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.7);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.7);
         // Moves left
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.6);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.6);
         // Forward again
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.3);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.3);
         // Turns right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.33);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.33);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 0.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.5, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.5, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 0.00, 0.00, 1.5);
         // Moves left
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.4);
         // Turns left
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.5);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.5);
         // Moves forward and intakes more artifacts
         mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, 0.00, -1.00, 1.00, -0.5, 0.6);
         // Moves back while still intaking
