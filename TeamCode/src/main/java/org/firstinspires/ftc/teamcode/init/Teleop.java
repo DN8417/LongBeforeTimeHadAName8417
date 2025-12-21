@@ -1,21 +1,35 @@
 package org.firstinspires.ftc.teamcode.init;
 
 
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
-import org.firstinspires.ftc.teamcode.action.Parking;
+//import org.firstinspires.ftc.teamcode.action.Parking;
+//import org.firstinspires.ftc.teamcode.action.limelight;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import java.lang.annotation.Target;
 
 @TeleOp (name = "TeleOp", group = "Main")
 public class Teleop extends OpMode {
     mecanumDrive mecanumDrive = new mecanumDrive();
     Intake intake = new Intake();
-    Parking parking = new Parking();
+    //Parking parking = new Parking();
     ColorSensor colorSensor = new ColorSensor();
+    private IMU imu;
+    private double distance;
+    private Limelight3A limelight;
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
     @Override
@@ -23,16 +37,25 @@ public class Teleop extends OpMode {
         //Initialize our motors
         mecanumDrive.init(this);
         intake.init(this);
-        parking.init(this);
+        //parking.init(this);
         colorSensor.init(this);
+
+        limelight=hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.pipelineSwitch(0); // april tag #11 pipeline
+
+        imu= hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
+        imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
     }
 
     public void start() {
         mecanumDrive.runWithoutEncoder();
         intake.init(this);
-        parking.init(this);
+        //parking.init(this);
         colorSensor.init(this);
+        limelight.start();
 
     }
 
@@ -76,8 +99,43 @@ public class Teleop extends OpMode {
 
         }
 
-        telemetry.addData("CurrentMode: ", mode ? 0 : 1);
-        colorSensor.getDetectedColor(telemetry);
+
+
+        YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
+        limelight.updateRobotOrientation(orientation.getYaw());
+        LLResult llResult = limelight.getLatestResult();
+        if (llResult != null && llResult.isValid()) {
+            Pose3D botpose = llResult.getBotpose_MT2();
+            //distance = getDistanceFromTage(llResult.getTa());
+            telemetry.addData("distance", distance);
+            telemetry.addData("Tx", llResult.getTx());
+            telemetry.addData("Ta", llResult.getTa());
+
+        }
+            double Tx = llResult.getTx();
+
+            if (Tx < -3) {
+                telemetry.addData("Tx", "TurretLeft");
+                intake.turretDirection(-0.2);
+            }
+
+            else if (Tx > 3) {
+                telemetry.addData("Tx", "TurretRight");
+                intake.turretDirection(0.2);
+            }
+
+            else {
+                telemetry.addData("Tx", "Good");
+                intake.turretDirection(0);
+            }
+
+            telemetry.addData("Tx", "llresult.getTx");
+
+            telemetry.addData("CurrentMode: ", mode ? 0 : 1);
+            colorSensor.getDetectedColor(telemetry);
+
+
+        }
+
 
     }
-}

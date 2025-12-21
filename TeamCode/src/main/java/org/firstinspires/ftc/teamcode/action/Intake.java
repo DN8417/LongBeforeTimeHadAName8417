@@ -119,10 +119,8 @@ public class Intake {
 
     }
 
-    public void turretDirection (float movementStick) {
-
-
-
+    public void turretDirection (double speed) {
+        turretMotor.setPower(speed);
     }
 
 }

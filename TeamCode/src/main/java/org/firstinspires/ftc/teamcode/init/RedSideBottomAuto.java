@@ -45,25 +45,25 @@ public class RedSideBottomAuto extends LinearOpMode {
         waitForStart();
 
         // Moves forward
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 1.3);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 1.3);
         // Turns right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.025);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.045);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.7);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 0.7);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 1.00, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 1.5);
         // Moves right
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 1.00, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.4);
 
 
 
