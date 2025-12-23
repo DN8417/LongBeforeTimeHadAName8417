@@ -12,14 +12,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
 //import org.firstinspires.ftc.teamcode.action.Parking;
 //import org.firstinspires.ftc.teamcode.action.limelight;
+import org.firstinspires.ftc.teamcode.action.touchSensor;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
-import com.qualcomm.hardware.limelightvision.LLResult;
+
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-import java.lang.annotation.Target;
 
 @TeleOp (name = "TeleOp", group = "Main")
 public class Teleop extends OpMode {
@@ -32,6 +30,8 @@ public class Teleop extends OpMode {
     private Limelight3A limelight;
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
+    touchSensor touchsensor = new touchSensor();
+
     @Override
     public void init() {
         //Initialize our motors
@@ -39,6 +39,7 @@ public class Teleop extends OpMode {
         intake.init(this);
         //parking.init(this);
         colorSensor.init(this);
+        touchsensor.init(this);
 
         limelight=hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0); // april tag #11 pipeline
@@ -47,6 +48,7 @@ public class Teleop extends OpMode {
         RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
+
 
     }
 
@@ -114,12 +116,12 @@ public class Teleop extends OpMode {
         }
             double Tx = llResult.getTx();
 
-            if (Tx < -3) {
+            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
                 telemetry.addData("Tx", "TurretLeft");
                 intake.turretDirection(-0.2);
             }
 
-            else if (Tx > 3) {
+            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
                 telemetry.addData("Tx", "TurretRight");
                 intake.turretDirection(0.2);
             }
@@ -133,7 +135,8 @@ public class Teleop extends OpMode {
 
             telemetry.addData("CurrentMode: ", mode ? 0 : 1);
             colorSensor.getDetectedColor(telemetry);
-
+            telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
+            telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
 
         }
 
