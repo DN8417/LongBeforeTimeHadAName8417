@@ -41,7 +41,7 @@ public class Teleop extends OpMode {
         colorSensor.init(this);
         touchsensor.init(this);
 
-        limelight=hardwareMap.get(Limelight3A.class, "limelight");
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0); // april tag #11 pipeline
 
         imu= hardwareMap.get(IMU.class, "imu");
