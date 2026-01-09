@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
 //import org.firstinspires.ftc.teamcode.action.Parking;
 //import org.firstinspires.ftc.teamcode.action.limelight;
+import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
@@ -31,6 +32,7 @@ public class Teleop extends OpMode {
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
+    FieldCentricTest fieldCentric = new FieldCentricTest();
 
     @Override
     public void init() {
@@ -40,6 +42,7 @@ public class Teleop extends OpMode {
         //parking.init(this);
         colorSensor.init(this);
         touchsensor.init(this);
+        fieldCentric.init(this);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0); // april tag #11 pipeline
@@ -57,6 +60,7 @@ public class Teleop extends OpMode {
         intake.init(this);
         //parking.init(this);
         colorSensor.init(this);
+        fieldCentric.init(this);
         limelight.start();
 
     }
@@ -73,10 +77,10 @@ public class Teleop extends OpMode {
 
         if(mode) {
             //Controls for mecanumDrive()
-            mecanumDrive.slowMode(gamepad1.left_bumper);
-            mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            fieldCentric.slowMode(gamepad1.left_bumper);
+            fieldCentric.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             //parking.lifting(gamepad1.b);
-            mecanumDrive.telemetryOutput();
+            fieldCentric.telemetryOutput();
 //            intake.telemetryOutput();
 
             intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);

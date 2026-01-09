@@ -38,7 +38,7 @@ public class Intake {
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        turretLauncher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turretLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
