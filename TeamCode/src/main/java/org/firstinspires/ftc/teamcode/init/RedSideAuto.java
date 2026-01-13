@@ -31,7 +31,7 @@ public class RedSideAuto extends LinearOpMode {
     private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
-    private DcMotor turretMotor;
+    private CRServo turretMotor;
 
     public ElapsedTime timer = new ElapsedTime();
 
@@ -47,15 +47,13 @@ public class RedSideAuto extends LinearOpMode {
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
-        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
+        turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
 
         frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         touchsensor.init(this);
 
@@ -97,10 +95,27 @@ public class RedSideAuto extends LinearOpMode {
         // Turns Right
         mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.6);
         // Moves forward and intakes more artifacts
-        mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, 0.00, -1.00, 1.00, -0.5, 0.6);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, 0.5, -1.00, 1.00, -0.5, 1.2);
+        // Moving the artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, -1.00, -0.5, -0.5, 1.0);
         // Moves back while still intaking
-//        mecanumDrive(0.5, 0.5, 0.5, 0.5, 0.00, 0.00, -1.00, 1.00, -0.5, 0.6);
-
+        mecanumDrive(0.5, 0.5, 0.5, 0.5, 0.00, 0.5, -1.00, 1.00, -0.5, 1.2);
+        //Moves Foward to correct itself
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.5, -1.00, 1.00, -0.5, 0.4);
+        // Turn Left
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.5, -1.00, 1.00, -0.5, 0.6);
+        // Buffer time before shooting
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 1.00, 0.00, 1.5);
+        // Shooting first artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 1.00, -0.5, 1.0);
+        // Charging up to shoot again
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 1.00, 0.00, 1.5);
+        // Shooting Second artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.5, -1.00, 1.00, -0.7, 1.0);
+        // Charging up to shoot again
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 1.00, 0.00, 1.5);
+        // Shoots last artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.5, -1.00, 0.00, -0.7, 1.0);
     }
 
     public void mecanumDrive(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower,

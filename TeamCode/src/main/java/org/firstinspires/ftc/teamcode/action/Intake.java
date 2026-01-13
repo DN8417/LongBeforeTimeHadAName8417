@@ -22,7 +22,7 @@ public class Intake {
     private DcMotor rubberBandWheel;
     private CRServo smallWheel;
     private DcMotor turretLauncher;
-    private DcMotor turretMotor;
+    private CRServo turretMotor;
 
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -31,7 +31,7 @@ public class Intake {
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
-        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
+        turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -41,7 +41,6 @@ public class Intake {
         turretLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
     }

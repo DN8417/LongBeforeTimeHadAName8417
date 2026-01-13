@@ -77,10 +77,10 @@ public class Teleop extends OpMode {
 
         if(mode) {
             //Controls for mecanumDrive()
-            fieldCentric.slowMode(gamepad1.left_bumper);
-            fieldCentric.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            mecanumDrive.slowMode(gamepad1.left_bumper);
+            mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             //parking.lifting(gamepad1.b);
-            fieldCentric.telemetryOutput();
+            mecanumDrive.telemetryOutput();
 //            intake.telemetryOutput();
 
             intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);
