@@ -92,16 +92,16 @@ public class RedSideAuto extends LinearOpMode {
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 0.00, 0.00, 1.5);
         // Moves right
         mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.4);
-        // Turns Right
+        // Turns Left
         mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.6);
         // Moves forward and intakes more artifacts
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, 0.5, -1.00, 1.00, -0.5, 1.2);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, 0.5, -1.00, 1.00, -0.5, 1.5);
         // Moving the artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, -1.00, -0.5, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, -1.00, 1.00, -0.5, 1.0);
         // Moves back while still intaking
-        mecanumDrive(0.5, 0.5, 0.5, 0.5, 0.00, 0.5, -1.00, 1.00, -0.5, 1.2);
-        //Moves Foward to correct itself
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.5, -1.00, 1.00, -0.5, 0.4);
+        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, 0.5, -1.00, 1.00, -0.5, 0.001);
+        //Moves Forward to correct itself
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.5, -1.00, 1.00, -0.5, 0.8);
         // Turn Left
         mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.5, -1.00, 1.00, -0.5, 0.6);
         // Buffer time before shooting
@@ -116,6 +116,18 @@ public class RedSideAuto extends LinearOpMode {
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.5, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.5, -1.00, 0.00, -0.7, 1.0);
+        // Turns Left
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.4);
+        // move right to line up with the artifacts
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.6);
+        // moving backwards and picking up 3 more
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, 0.5, 0.00, 1.00, -0.5, 1.0);
+        // moving forward to move back into place
+        mecanumDrive(0.3, 0.3, 0.3, 0.3, 0.00, 0.5, 0.00, 1.00, -0.5, 0.5);
+        // moving left
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.3);
+        // Turns right
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 0.3);
     }
 
     public void mecanumDrive(double frontRightPower, double frontLeftPower, double backRightPower, double backLeftPower,
