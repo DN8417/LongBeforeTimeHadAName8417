@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -31,7 +32,7 @@ public class RedSideBottomAuto extends LinearOpMode {
     private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
-    private DcMotor turretMotor;
+    private CRServo turretMotor;
 
 
     public ElapsedTime timer = new ElapsedTime();
@@ -48,15 +49,13 @@ public class RedSideBottomAuto extends LinearOpMode {
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
-        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
+        turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
 
         frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         touchsensor.init(this);
 
@@ -71,27 +70,21 @@ public class RedSideBottomAuto extends LinearOpMode {
         waitForStart();
         limelight.start();
 
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.00);
-        // Moves forward
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 1.7);
-        // Turns right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.045);
-        // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 1.0);
+        // Giving the turret time to charge up
+        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 0.7, 0.00, 0.00, 0.00, 3.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.5, 0.8);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 2.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.7, 0.8);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 2.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.55, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.55, 0.00, 0.00, 0.00, 1.5);
-        // Moves right
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.55, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
+
 
 
 

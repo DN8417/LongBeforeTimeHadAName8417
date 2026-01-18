@@ -6,9 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -21,8 +23,10 @@ public class Intake {
     private CRServo intakePartTwo;
     private DcMotor rubberBandWheel;
     private CRServo smallWheel;
-    private DcMotor turretLauncher;
+    private DcMotorEx turretLauncher;
     private CRServo turretMotor;
+    private TouchSensor leftTouchSensor;
+    touchSensor touchSensor = new touchSensor();
 
     public void init (@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -30,8 +34,9 @@ public class Intake {
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
-        turretLauncher = hardwareMap.get(DcMotor.class, "Turret Launcher");
+        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
         turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
+        leftTouchSensor = hardwareMap.get(TouchSensor.class, "Left Touch Sensor");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -101,17 +106,13 @@ public class Intake {
 
     }
 
-    public void launch (float bigRedButton, float farLaunch) {
+    public void launch (float bigRedButton) {
 
-        if (bigRedButton > 0.5 && farLaunch < 0.5) {
-            turretLauncher.setPower(0.5);
-
-        }
-        else if (bigRedButton < 0.5 && farLaunch > 0.5) {
-            turretLauncher.setPower(0.68);
+        if (bigRedButton > 0.5) {
+            turretLauncher.setPower(0.7);
 
         }
-        else if (bigRedButton < 0.5 && farLaunch < 0.5) {
+        else if (bigRedButton < 0.5) {
             turretLauncher.setPower(0.0);
 
         }
@@ -120,6 +121,12 @@ public class Intake {
 
     public void turretDirection (double speed) {
         turretMotor.setPower(speed);
+    }
+
+    public void parkingTurretDirection (boolean noCameraBreak) {
+        if(noCameraBreak && leftTouchSensor.isPressed()) {
+            turretMotor.setPower(-0.4);
+        }
     }
 
 }
