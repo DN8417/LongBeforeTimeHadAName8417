@@ -63,27 +63,27 @@ public class RedSideBottomAuto extends LinearOpMode {
         limelight.pipelineSwitch(0); // april tag #11 pipeline
 
         imu= hardwareMap.get(IMU.class, "imu");
-        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
+        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
         waitForStart();
         limelight.start();
 
         // Giving the turret time to charge up
-        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 0.7, 0.00, 0.00, 0.00, 3.5);
+        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 0.62, 0.00, 0.00, 0.00, 3.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.7, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.7, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
 
 
 
@@ -108,33 +108,33 @@ public class RedSideBottomAuto extends LinearOpMode {
             intakePartTwo.setPower(secondIntakePower);
             intakeMotor.setPower(intakePower);
 
-            YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
-            limelight.updateRobotOrientation(orientation.getYaw());
-            LLResult llResult = limelight.getLatestResult();
-            if (llResult != null && llResult.isValid()) {
-                Pose3D botpose = llResult.getBotpose_MT2();
-                //distance = getDistanceFromTage(llResult.getTa());
-                telemetry.addData("distance", distance);
-                telemetry.addData("Tx", llResult.getTx());
-                telemetry.addData("Ta", llResult.getTa());
-
-            }
-            double Tx = llResult.getTx();
-
-            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretLeft");
-                turretMotor.setPower(-0.2);
-            }
-
-            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretRight");
-                turretMotor.setPower(0.2);
-            }
-
-            else {
-                telemetry.addData("Tx", "Good");
-                turretMotor.setPower(0);
-            }
+//            YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
+//            limelight.updateRobotOrientation(orientation.getYaw());
+//            LLResult llResult = limelight.getLatestResult();
+//            if (llResult != null && llResult.isValid()) {
+//                Pose3D botpose = llResult.getBotpose_MT2();
+//                //distance = getDistanceFromTage(llResult.getTa());
+//                telemetry.addData("distance", distance);
+//                telemetry.addData("Tx", llResult.getTx());
+//                telemetry.addData("Ta", llResult.getTa());
+//
+//            }
+//            double Tx = llResult.getTx();
+//
+//            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
+//                telemetry.addData("Tx", "TurretLeft");
+//                turretMotor.setPower(-0.2);
+//            }
+//
+//            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
+//                telemetry.addData("Tx", "TurretRight");
+//                turretMotor.setPower(0.2);
+//            }
+//
+//            else {
+//                telemetry.addData("Tx", "Good");
+//                turretMotor.setPower(0);
+//            }
 
         }
 

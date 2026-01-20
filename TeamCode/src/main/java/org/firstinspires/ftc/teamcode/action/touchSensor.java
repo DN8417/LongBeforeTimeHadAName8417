@@ -14,8 +14,6 @@ public class touchSensor {
         HardwareMap hardwareMap = opMode.hardwareMap;
         leftTouchSensor = hardwareMap.get(TouchSensor.class, "Left Touch Sensor");
         rightTouchSensor = hardwareMap.get(TouchSensor.class, "Right Touch Sensor");
-//        leftTouchSensor.setMode(DigitalChannel.Mode.INPUT);
-//        rightTouchSensor.setMode(DigitalChannel.Mode.INPUT);
 
     }
 

@@ -138,12 +138,12 @@ public class Teleop extends OpMode {
         }
             double Tx = llResult.getTx();
 
-            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
+            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
                 telemetry.addData("Tx", "TurretLeft");
                 intake.turretDirection(-0.2);
             }
 
-            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
+            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
                 telemetry.addData("Tx", "TurretRight");
                 intake.turretDirection(0.2);
             }
@@ -157,6 +157,7 @@ public class Teleop extends OpMode {
             turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
             telemetry.addData("Tx", "llresult.getTx");
+            telemetry.addData("Tx Value", Tx);
 
         if (distance > 2.7) {
             light.setServoPos(0.277);
