@@ -73,15 +73,15 @@ public class RedSideBottomAuto extends LinearOpMode {
         // Giving the turret time to charge up
         mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 0.62, 0.00, 0.00, 0.00, 3.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.65, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
 
