@@ -13,12 +13,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+//import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.Light;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
 //import org.firstinspires.ftc.teamcode.action.Parking;
 //import org.firstinspires.ftc.teamcode.action.limelight;
 //import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.FlyWheel;
+import org.firstinspires.ftc.teamcode.action.WhiteLight;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
 import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
@@ -47,6 +49,7 @@ public class BlueTeleop extends OpMode {
         return distance;
     }
     Light light = new Light();
+    WhiteLight whiteLight = new WhiteLight();
 
     @Override
     public void init() {
@@ -59,6 +62,7 @@ public class BlueTeleop extends OpMode {
         //fieldCentric.init(this);
         flyWheel.init(this);
         light.init(this);
+        whiteLight.init(this);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(1); // april tag #11 pipeline
@@ -138,12 +142,12 @@ public class BlueTeleop extends OpMode {
         }
         double Tx = llResult.getTx();
 
-        if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
+        if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretLeft");
             intake.turretDirection(-0.2);
         }
 
-        else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
+        else if (Tx > 3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretRight");
             intake.turretDirection(0.2);
         }
@@ -157,6 +161,7 @@ public class BlueTeleop extends OpMode {
         turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
         telemetry.addData("Tx", "llresult.getTx");
+        telemetry.addData("Tx Value", Tx);
 
         if (distance > 2.7) {
             light.setServoPos(0.277);
@@ -169,6 +174,13 @@ public class BlueTeleop extends OpMode {
         else {
             light.setServoPos(0.388);
         }
+        if (turretLauncher.getVelocity() > -1250 && turretLauncher.getVelocity() < -1100) {
+            whiteLight.setServoPos(0.25);
+        }
+
+        else {
+            whiteLight.setServoPos(0.00);
+        }
 
 
 
@@ -176,6 +188,7 @@ public class BlueTeleop extends OpMode {
         colorSensor.getDetectedColor(telemetry);
         telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
         telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
+        telemetry.addData("Current Velocity", turretLauncher.getVelocity());
 
 
 

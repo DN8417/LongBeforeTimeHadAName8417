@@ -9,9 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
 public class FlyWheel{
     public DcMotorEx turretLauncher;
     public double lowVelocity = 1000;
+    Telemetry telemetry;
 
     public void init(@NonNull OpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -31,5 +35,9 @@ public class FlyWheel{
        else {
            turretLauncher.setVelocity(0);
        }
+    }
+    public void TelemetryOutput(){
+        telemetry.addData("Current Velocity", turretLauncher.getVelocity());
+
     }
 }

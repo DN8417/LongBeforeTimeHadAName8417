@@ -31,7 +31,7 @@ public class BlueSideBottomAuto extends LinearOpMode {
     private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
-    private DcMotor turretMotor;
+    private CRServo turretMotor;
 
 
     public ElapsedTime timer = new ElapsedTime();
@@ -48,15 +48,13 @@ public class BlueSideBottomAuto extends LinearOpMode {
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
-        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
+        turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
 
         frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         touchsensor.init(this);
 
@@ -71,32 +69,36 @@ public class BlueSideBottomAuto extends LinearOpMode {
         waitForStart();
         limelight.start();
 
-        // Moves forward
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.5, 0.00, 0.00, 0.00, 1.4);
-        // Buffer Time Before Turning
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 0.7);
-        // Turns right
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.47, 0.00, 0.00, 0.00, 0.02);
-        // Buffer time before moving back
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 0.7);
-        //moves back a little
-        //mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.47, 0.00, 0.00, 0.00, 0.2);
-        // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 0.7);
+        // Giving the turret time to charge up
+        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 0.62, 0.00, 0.00, 0.00, 3.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.47, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.47, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.47, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.47, 0.00, 0.00, 0.00, 1.5);
-        // Moves right
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.47, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
+
+        // Moving Forward so we don't scrape the wall
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+        // Turns right
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
+        // Moves back into the wall
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+        // Moves Backwards while intaking
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.4);
+        // Moving artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
+        // Moving back into position
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
 
 
     }
@@ -132,20 +134,20 @@ public class BlueSideBottomAuto extends LinearOpMode {
             }
             double Tx = llResult.getTx();
 
-            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretLeft");
-                turretMotor.setPower(-0.2);
-            }
-
-            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretRight");
-                turretMotor.setPower(0.2);
-            }
-
-            else {
-                telemetry.addData("Tx", "Good");
-                turretMotor.setPower(0);
-            }
+//            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
+//                telemetry.addData("Tx", "TurretLeft");
+//                turretMotor.setPower(-0.2);
+//            }
+//
+//            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
+//                telemetry.addData("Tx", "TurretRight");
+//                turretMotor.setPower(0.2);
+//            }
+//
+//            else {
+//                telemetry.addData("Tx", "Good");
+//                turretMotor.setPower(0);
+//            }
 
         }
 

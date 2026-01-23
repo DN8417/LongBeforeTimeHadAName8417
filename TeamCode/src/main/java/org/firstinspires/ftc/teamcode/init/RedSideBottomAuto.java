@@ -79,11 +79,44 @@ public class RedSideBottomAuto extends LinearOpMode {
         // Shooting Second artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
         // Shoots last artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
+        // Moving Forward so we don't scrape the wall
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+        // Turns Left
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
+        // Moves Left to line up with the wall
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00 ,0.2);
+        // Moves back into the wall
+        mecanumDrive(0.5, -0.5, -0.5, 0.5, 0.00, 0.62, 0.00, 0.00, 0.00, 0.4);
+        // Wait for a moment
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 1.00, -0.5, 1.0);
+        // Moves Backwards while intaking
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.4);
+        // Moving artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
+        // Moving back into position
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.7);
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
+
+        // Shooting first artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.5, 1.0);
+        // Charging up to shoot again
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
+        // Shooting Second artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
+        // Charging up to shoot again
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
+        // Shoots last artifact
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
+        // moves for leave points
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.00, 0.00, 0.00, 0.00, 0.4);
+
 
 
 
