@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 //import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.Light;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
-//import org.firstinspires.ftc.teamcode.action.Parking;
+import org.firstinspires.ftc.teamcode.action.Parking;
 //import org.firstinspires.ftc.teamcode.action.limelight;
 //import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.FlyWheel;
@@ -32,7 +32,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 public class BlueTeleop extends OpMode {
     mecanumDrive mecanumDrive = new mecanumDrive();
     Intake intake = new Intake();
-    //Parking parking = new Parking();
+    Parking parking = new Parking();
     ColorSensor colorSensor = new ColorSensor();
     private IMU imu;
     private double distance;
@@ -56,7 +56,7 @@ public class BlueTeleop extends OpMode {
         //Initialize our motors
         mecanumDrive.init(this);
         intake.init(this);
-        //parking.init(this);
+        parking.init(this);
         colorSensor.init(this);
         touchsensor.init(this);
         //fieldCentric.init(this);
@@ -110,6 +110,7 @@ public class BlueTeleop extends OpMode {
             intake.smallWheelSpin(gamepad2.b);
             flyWheel.flyWheelPower(gamepad2.left_trigger);
             intake.launch(gamepad2.right_trigger);
+            parking.setMotorSpeed(gamepad2.left_stick_y);
 
         } else if (!mode) {
             //Controls for mecanumDrive()

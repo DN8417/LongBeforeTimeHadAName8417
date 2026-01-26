@@ -124,7 +124,7 @@ public class Intake {
     }
 
     public void parkingTurretDirection (boolean noCameraBreak) {
-        if(noCameraBreak && leftTouchSensor.isPressed()) {
+        if(noCameraBreak) {
             turretMotor.setPower(-0.4);
         }
     }

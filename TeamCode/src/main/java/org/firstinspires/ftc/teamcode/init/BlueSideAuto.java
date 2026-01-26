@@ -31,7 +31,7 @@ public class BlueSideAuto extends LinearOpMode {
     private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
-    private DcMotor turretMotor;
+    private CRServo turretMotor;
 
 
     public ElapsedTime timer = new ElapsedTime();
@@ -48,15 +48,13 @@ public class BlueSideAuto extends LinearOpMode {
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
-        turretMotor = hardwareMap.get(DcMotor.class, "Turret Motor");
+        turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
 
         frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         touchsensor.init(this);
 
