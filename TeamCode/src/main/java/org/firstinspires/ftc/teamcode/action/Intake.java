@@ -109,11 +109,11 @@ public class Intake {
     public void launch (float bigRedButton) {
 
         if (bigRedButton > 0.5) {
-            turretLauncher.setPower(1.5);
+            turretLauncher.setVelocity(1000);
 
         }
         else if (bigRedButton < 0.5) {
-            turretLauncher.setPower(0.0);
+            turretLauncher.setVelocity(0.0);
 
         }
 
