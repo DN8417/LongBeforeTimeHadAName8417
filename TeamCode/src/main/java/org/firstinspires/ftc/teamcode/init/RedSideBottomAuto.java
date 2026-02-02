@@ -95,7 +95,7 @@ public class RedSideBottomAuto extends LinearOpMode {
         // Wait for a moment
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 1.00, -0.5, 1.0);
         // Moves Backwards while intaking
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.4);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.7);
         // Moving artifacts along the intake
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
         // Moving back into position

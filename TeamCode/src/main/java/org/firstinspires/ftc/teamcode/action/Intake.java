@@ -106,18 +106,18 @@ public class Intake {
 
     }
 
-    public void launch (float bigRedButton) {
-
-        if (bigRedButton > 0.5) {
-            turretLauncher.setVelocity(1000);
-
-        }
-        else if (bigRedButton < 0.5) {
-            turretLauncher.setVelocity(0.0);
-
-        }
-
-    }
+//    public void launch (float bigRedButton) {
+//
+//        if (bigRedButton > 0.5) {
+//            turretLauncher.setVelocity(1500);
+//
+//        }
+//        else if (bigRedButton < 0.5) {
+//            turretLauncher.setVelocity(0.0);
+//
+//        }
+//
+//    }
 
     public void turretDirection (double speed) {
         turretMotor.setPower(speed);

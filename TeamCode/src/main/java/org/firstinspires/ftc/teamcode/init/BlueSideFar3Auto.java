@@ -15,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
 
-@Autonomous(name="Blue Far Zone", group ="Autos")
-public class BlueSideBottomAuto extends LinearOpMode {
+@Autonomous(name="Blue Far Zone (3 Artifacts)", group ="Autos")
+public class BlueSideFar3Auto extends LinearOpMode {
 
     public DcMotor frontRightDrive;
     public DcMotor frontLeftDrive;
@@ -83,41 +83,8 @@ public class BlueSideBottomAuto extends LinearOpMode {
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
-
         // Moving Forward so we don't scrape the wall
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-        // Turns right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
-        // Moves back into the wall
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
-        // Moves Backwards while intaking
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.8);
-        // Moving artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
-
-        // Moving back into position
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.8);
-
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.21);
-        // Moves back into the wall
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-
-        // Stalling after movement
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.3);
-        // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.5, 1.0);
-        // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
-        // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
-        // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
-        // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
-        // moves for leave points
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.00, 0.00, 0.00, 0.00, 0.4);
-
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.5);
 
     }
 

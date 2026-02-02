@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.init;
 
-import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -11,12 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
 
-@Autonomous(name="Blue Far Zone", group ="Autos")
-public class BlueSideBottomAuto extends LinearOpMode {
+@Autonomous(name="Red Far Zone (3 Artifacts)", group ="Autos")
+public class RedSideFar3Auto extends LinearOpMode {
 
     public DcMotor frontRightDrive;
     public DcMotor frontLeftDrive;
@@ -59,11 +56,11 @@ public class BlueSideBottomAuto extends LinearOpMode {
         touchsensor.init(this);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(1); // april tag #11 pipeline
+        limelight.pipelineSwitch(0); // april tag #11 pipeline
 
         imu= hardwareMap.get(IMU.class, "imu");
-        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
+        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
         waitForStart();
@@ -83,41 +80,8 @@ public class BlueSideBottomAuto extends LinearOpMode {
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
-
         // Moving Forward so we don't scrape the wall
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-        // Turns right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
-        // Moves back into the wall
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.3);
-        // Moves Backwards while intaking
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 1.00, -0.5, 0.8);
-        // Moving artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
-
-        // Moving back into position
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.8);
-
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.21);
-        // Moves back into the wall
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.2);
-
-        // Stalling after movement
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.3);
-        // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.5, 1.0);
-        // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, 0.00, 0.00, 0.00, 1.5);
-        // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
-        // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 0.62, -1.00, 1.00, -0.5, 1.5);
-        // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 0.62, -1.00, 0.00, -0.7, 1.0);
-        // moves for leave points
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 0.00, 0.00, 0.00, 0.00, 0.4);
-
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 0.62, 0.00, 0.00, 0.00, 0.5);
 
     }
 
@@ -139,19 +103,19 @@ public class BlueSideBottomAuto extends LinearOpMode {
             intakePartTwo.setPower(secondIntakePower);
             intakeMotor.setPower(intakePower);
 
-            YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
-            limelight.updateRobotOrientation(orientation.getYaw());
-            LLResult llResult = limelight.getLatestResult();
-            if (llResult != null && llResult.isValid()) {
-                Pose3D botpose = llResult.getBotpose_MT2();
-                //distance = getDistanceFromTage(llResult.getTa());
-                telemetry.addData("distance", distance);
-                telemetry.addData("Tx", llResult.getTx());
-                telemetry.addData("Ta", llResult.getTa());
-
-            }
-            double Tx = llResult.getTx();
-
+//            YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
+//            limelight.updateRobotOrientation(orientation.getYaw());
+//            LLResult llResult = limelight.getLatestResult();
+//            if (llResult != null && llResult.isValid()) {
+//                Pose3D botpose = llResult.getBotpose_MT2();
+//                //distance = getDistanceFromTage(llResult.getTa());
+//                telemetry.addData("distance", distance);
+//                telemetry.addData("Tx", llResult.getTx());
+//                telemetry.addData("Ta", llResult.getTa());
+//
+//            }
+//            double Tx = llResult.getTx();
+//
 //            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
 //                telemetry.addData("Tx", "TurretLeft");
 //                turretMotor.setPower(-0.2);
