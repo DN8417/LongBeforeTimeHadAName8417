@@ -143,12 +143,12 @@ public class BlueTeleop extends OpMode {
         }
         double Tx = llResult.getTx();
 
-        if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
+        if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretLeft");
             intake.turretDirection(-0.2);
         }
 
-        else if (Tx > 3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
+        else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretRight");
             intake.turretDirection(0.2);
         }

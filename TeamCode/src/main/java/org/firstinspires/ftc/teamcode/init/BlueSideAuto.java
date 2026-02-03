@@ -166,12 +166,12 @@ public class BlueSideAuto extends LinearOpMode {
             }
             double Tx = llResult.getTx();
 
-            if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
+            if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
                 telemetry.addData("Tx", "TurretLeft");
                 turretMotor.setPower(-0.2);
             }
 
-            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
+            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
                 telemetry.addData("Tx", "TurretRight");
                 turretMotor.setPower(0.2);
             }
