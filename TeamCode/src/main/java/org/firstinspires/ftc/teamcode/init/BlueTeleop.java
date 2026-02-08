@@ -98,26 +98,27 @@ public class BlueTeleop extends OpMode {
         }
 
         if(mode) {
-            //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            intake.parkingTurretDirection(gamepad1.a);
-            mecanumDrive.telemetryOutput();
+            intake.parkingTurretDirection(gamepad1.a, gamepad1.b);
+            parking.buttonParking(gamepad2.left_stick_y, gamepad1.x);
 
             intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
             flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
-            //intake.launch(gamepad2.right_trigger);
-            parking.setMotorSpeed(gamepad2.left_stick_y);
+            parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
+
+            mecanumDrive.telemetryOutput();
+            parking.telemetryOutput();
 
         } else if (!mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
             mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
-            intake.parkingTurretDirection(gamepad2.a);
-            mecanumDrive.telemetryOutput();
+            intake.parkingTurretDirection(gamepad2.a, gamepad2.b);
+            parking.buttonParking(gamepad1.left_stick_y, gamepad1.x);
 
             intake.takeAndGive(gamepad1.right_bumper, gamepad1.left_bumper);
             intake.startLoading(gamepad1.b);
@@ -125,6 +126,9 @@ public class BlueTeleop extends OpMode {
             intake.smallWheelSpin(gamepad1.b);
             flyWheel.flyWheelPower(gamepad1.left_trigger, gamepad1.right_trigger);
             //intake.launch(gamepad1.right_trigger);
+
+            mecanumDrive.telemetryOutput();
+            parking.telemetryOutput();
 
         }
 

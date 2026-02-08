@@ -80,7 +80,7 @@ public class RedSideAuto extends LinearOpMode {
         // Forward again
         mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.3);
         // Turns left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.35);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.38);
         // Buffer time before shooting
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, 0.00, 0.00, 0.00, 1.5);
         // Shooting first artifact

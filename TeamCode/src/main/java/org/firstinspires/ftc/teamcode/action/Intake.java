@@ -123,9 +123,11 @@ public class Intake {
         turretMotor.setPower(speed);
     }
 
-    public void parkingTurretDirection (boolean noCameraBreak) {
-        if(noCameraBreak) {
+    public void parkingTurretDirection (boolean noCameraBreak, boolean unstuckButton) {
+        if(noCameraBreak && !unstuckButton) {
             turretMotor.setPower(-0.4);
+        } else if (!noCameraBreak && unstuckButton) {
+            turretMotor.setPower(0.4);
         }
     }
 

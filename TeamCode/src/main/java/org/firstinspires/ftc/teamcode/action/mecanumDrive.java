@@ -28,7 +28,7 @@ public class mecanumDrive {
     IMU imu;
     Telemetry telemetry;
     // DECLARE CUSTOM
-    static double totalSpeed = 0.85; //This is to control the percent of energy being applied to the motors.
+    static double totalSpeed = 1; //This is to control the percent of energy being applied to the motors.
     double slowSpeed = 0.50; // x% of whatever speed totalSpeed is
 
     // METHODS
@@ -64,7 +64,7 @@ public class mecanumDrive {
      * @param enable True if you want to enable slow-mode. False if not.
      */
     public void slowMode(Boolean enable) {
-        slowSpeed = enable ? 1.00 : 0.50;
+        slowSpeed = enable ? 1.50 : 0.50;
     }
 
     /** Changes the maximum speed of the robot.
