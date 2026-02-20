@@ -83,7 +83,7 @@ public class Intake {
     public void smallWheelSpin (boolean startsSpinning) {
 
         if (startsSpinning) {
-            smallWheel.setPower(-1.00);
+            smallWheel.setPower(1.00);
 
         }
         else if (!startsSpinning) {
