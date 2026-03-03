@@ -10,38 +10,71 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
-public class FlyWheel{
-    public DcMotorEx turretLauncher;
-    public double lowVelocity = 1200;
-    double highVelocity = 400;
-    Telemetry telemetry;
+public class FlyWheel {
+
+    private DcMotorEx flywheelMaster;
+    private DcMotorEx flywheelSlave;
+
+    private Telemetry telemetry;
+
+    // Velocity targets
+    public double lowVelocity = 1105;
+    public double highVelocity = 1300;
+
+    // Fixed PIDF constants
+    private static final double kP =7;
+    private static final double kI = 0.0;
+    private static final double kD = 0.0;
+    private static final double kF = 9;
+    public double getVelocity() {
+        return flywheelMaster.getVelocity();
+    }
 
     public void init(@NonNull OpMode opMode) {
+
         HardwareMap hardwareMap = opMode.hardwareMap;
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
-        turretLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        turretLauncher.setDirection(DcMotorSimple.Direction.FORWARD);
+        telemetry = opMode.telemetry;
+
+        flywheelMaster = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        flywheelSlave  = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
+
+        flywheelSlave.setDirection(DcMotorSimple.Direction.FORWARD);
+        flywheelMaster.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        flywheelMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        flywheelMaster.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flywheelSlave.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // <-- FIXED
+
+        PIDFCoefficients pidf = new PIDFCoefficients(kP, kI, kD, kF);
+        flywheelMaster.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf);
+        flywheelSlave.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf); // optional
 
 
     }
 
-    public void flyWheelPower (float powerButton, float bigRedButton) {
-       if (powerButton > 0.5 && bigRedButton < 0.5) {
-           turretLauncher.setVelocity(lowVelocity);
-           PIDFCoefficients pidfCoefficients = new PIDFCoefficients(19, 0, 0, -150);
-           turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
-       }
-       else if (powerButton < 0.5 && bigRedButton > 0.5) {
-           turretLauncher.setVelocity(highVelocity);
-       }
-       else {
-           turretLauncher.setVelocity(0);
-       }
-    }
-    public void TelemetryOutput(){
-        telemetry.addData("Current Velocity", turretLauncher.getVelocity() * -1);
+    public void flyWheelPower(float leftTrigger, float rightTrigger) {
 
+        double targetVelocity = 0;
+
+        if (leftTrigger > 0.5 && rightTrigger < 0.5) {
+            targetVelocity = lowVelocity;
+        }
+        else if (rightTrigger > 0.5 && leftTrigger < 0.5) {
+            targetVelocity = highVelocity;
+        }
+
+
+        flywheelMaster.setVelocity(targetVelocity);
+        flywheelSlave.setVelocity(targetVelocity);
+    }
+
+    public void TelemetryOutput() {
+
+        telemetry.addData("Target Velocity",
+                flywheelMaster.getVelocity());
+
+        telemetry.addData("Actual Velocity",
+                flywheelMaster.getVelocity());
     }
 }

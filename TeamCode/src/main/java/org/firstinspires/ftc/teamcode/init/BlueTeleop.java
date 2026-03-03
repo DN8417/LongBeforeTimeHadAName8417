@@ -72,7 +72,8 @@ public class BlueTeleop extends OpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher 1");
+        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
 
     }
 
@@ -110,7 +111,6 @@ public class BlueTeleop extends OpMode {
             intake.smallWheelSpin(gamepad2.b);
             flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
             //intake.launch(gamepad2.right_trigger);
-            parking.setMotorSpeed(gamepad2.left_stick_y);
 
         } else if (!mode) {
             //Controls for mecanumDrive()

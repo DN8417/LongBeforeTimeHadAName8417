@@ -42,7 +42,6 @@ public class Teleop extends OpMode {
     touchSensor touchsensor = new touchSensor();
     //FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
-    private DcMotorEx turretLauncher;
     public double getDistanceFromTage(double ta) {
         double scale = 3.085408;  // y value in equation
         double distance = (scale / ta);
@@ -72,7 +71,6 @@ public class Teleop extends OpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
 
     }
 
@@ -111,7 +109,7 @@ public class Teleop extends OpMode {
             intake.smallWheelSpin(gamepad2.b);
             flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
             //intake.launch(gamepad2.right_trigger);
-            parking.setMotorSpeed(gamepad2.left_stick_y);
+
 
         } else if (!mode) {
             //Controls for mecanumDrive()
@@ -159,8 +157,6 @@ public class Teleop extends OpMode {
                 intake.turretDirection(0);
             }
 
-            PIDFCoefficients pidfCoefficients= new PIDFCoefficients(23,0,0,-650);
-            turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
             telemetry.addData("Tx", "llresult.getTx");
             telemetry.addData("Tx Value", Tx);
@@ -176,8 +172,8 @@ public class Teleop extends OpMode {
         else {
             light.setServoPos(0.388);
         }
-        if (turretLauncher.getVelocity() > -1250 && turretLauncher.getVelocity() < -1100) {
-            whiteLight.setServoPos(0.25);
+        if (flyWheel.getVelocity() < 1250 && flyWheel.getVelocity() > 1100) {
+            whiteLight.setServoPos(0.15);
         }
 
         else {
@@ -191,7 +187,8 @@ public class Teleop extends OpMode {
             telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
             telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
             telemetry.addData("Endgame Sensor is Pressed", touchsensor.endgameTouchSensorPressed());
-            telemetry.addData("Current Velocity", turretLauncher.getVelocity());
+            telemetry.addData("Current Velocity", flyWheel.getVelocity());
+
 
 
 
