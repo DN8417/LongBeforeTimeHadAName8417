@@ -21,6 +21,8 @@ public class Intake {
     Telemetry telemetry;
     private DcMotor intakeMotor;
     private CRServo intakePartTwo;
+    private CRServo ziptieWheel2;
+    private CRServo ziptieWheel3;
     private DcMotor rubberBandWheel;
     private CRServo smallWheel;
     private DcMotorEx turretLauncher;
@@ -37,6 +39,8 @@ public class Intake {
         turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
         turretMotor = hardwareMap.get(CRServo.class, "Turret Motor");
         leftTouchSensor = hardwareMap.get(TouchSensor.class, "Left Touch Sensor");
+        ziptieWheel2 = hardwareMap.get(CRServo.class, "Ziptie Wheel 2");
+        ziptieWheel3 = hardwareMap.get(CRServo.class, "Ziptie Wheel 3");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -84,10 +88,14 @@ public class Intake {
 
         if (startsSpinning) {
             smallWheel.setPower(1.00);
+            ziptieWheel2.setPower(-1.00);
+            ziptieWheel3.setPower(-1.00);
 
         }
         else if (!startsSpinning) {
             smallWheel.setPower(0.00);
+            ziptieWheel2.setPower(0.00);
+            ziptieWheel3.setPower(0.00);
 
         }
 

@@ -30,16 +30,6 @@ public class Parking {
 
     }
 
-
-    public void buttonParking(double speed, boolean xButton) {
-        boolean stickPark = true;
-        if (xButton && stickPark) {
-            stickPark = !stickPark;
-        } else if (xButton && !stickPark) {
-            stickPark = true;
-        }
-
-    }
     public void setServoPos(double angle) {
         endgameServo1.setPosition(angle);
         endgameServo2.setPosition(angle);

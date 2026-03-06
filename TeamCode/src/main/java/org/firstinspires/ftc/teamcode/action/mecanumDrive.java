@@ -31,6 +31,7 @@ public class mecanumDrive {
     static double totalSpeed = 1; //This is to control the percent of energy being applied to the motors.
     double slowSpeed = 0.50; // x% of whatever speed totalSpeed is
 
+
     // METHODS
     /** Initializes the mecanum drive wheels.
      * @param opMode If you are constructing from an Auto or TeleOp, type in "this" without the quotation marks.
@@ -66,6 +67,7 @@ public class mecanumDrive {
     public void slowMode(Boolean enable) {
         slowSpeed = enable ? 1.50 : 0.50;
     }
+
 
     /** Changes the maximum speed of the robot.
      * @apiNote By default this is 0.75
