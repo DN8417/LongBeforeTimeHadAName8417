@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 public class FlyWheel{
     public DcMotorEx turretLauncher;
+    public DcMotorEx turretLauncher2;
     public double lowVelocity = 1200;
     double highVelocity = 400;
     Telemetry telemetry;
@@ -23,6 +24,10 @@ public class FlyWheel{
         turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
         turretLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         turretLauncher.setDirection(DcMotorSimple.Direction.FORWARD);
+
+//        turretLauncher2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
+//        turretLauncher2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        turretLauncher2.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
     }
