@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.init;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -35,18 +34,21 @@ public class BlueTeleop extends OpMode {
     Parking parking = new Parking();
     ColorSensor colorSensor = new ColorSensor();
     private IMU imu;
-    private double distance;
     private Limelight3A limelight;
+    private double CameraHeight = 41.958;
+    private double CameraAngle = 21;
+    private double GoalHeight = 74.95;
+    private double distance = 0;
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
     //FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
     private DcMotorEx turretLauncher;
-    public double getDistanceFromTage(double ta) {
-        double scale = 3.085408;  // y value in equation
-        double distance = (scale / ta);
-        return distance;
+    public double getDistanceFromTage(double Ty) {
+        double angleToGoal = CameraAngle+Ty;
+        double heightDifferance = GoalHeight-CameraHeight;
+        return heightDifferance/Math.tan(Math.toRadians(angleToGoal));
     }
     Light light = new Light();
     WhiteLight whiteLight = new WhiteLight();
@@ -84,6 +86,7 @@ public class BlueTeleop extends OpMode {
         colorSensor.init(this);
         //fieldCentric.init(this);
         flyWheel.init(this);
+        touchsensor.init(this);
         limelight.start();
 
     }
@@ -134,15 +137,21 @@ public class BlueTeleop extends OpMode {
 
         }
 
+        LLResult llResult = limelight.getLatestResult();
+        if (llResult != null && llResult.isValid()) {
+            distance = getDistanceFromTage(llResult.getTy());
+            telemetry.addData("Distance", distance);
+        } else {
+            telemetry.addData("No Valid Target", "Found");
+        }
+
 
 
         YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw());
-        LLResult llResult = limelight.getLatestResult();
         if (llResult != null && llResult.isValid()) {
             Pose3D botpose = llResult.getBotpose_MT2();
             distance = getDistanceFromTage(llResult.getTa());
-            telemetry.addData("distance", distance);
             telemetry.addData("Tx", llResult.getTx());
             telemetry.addData("Ta", llResult.getTa());
 

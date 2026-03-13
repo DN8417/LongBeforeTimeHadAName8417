@@ -4,11 +4,7 @@ package org.firstinspires.ftc.teamcode.init;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
@@ -35,17 +31,21 @@ public class Teleop extends OpMode {
     Parking parking = new Parking();
     ColorSensor colorSensor = new ColorSensor();
     private IMU imu;
-    private double distance;
     private Limelight3A limelight;
+    private double CameraHeight = 41.958;
+    private double CameraAngle = 21;
+    private double GoalHeight = 74.95;
+    private double distance = 0;
     boolean mode = true;
+
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
     //FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
-    public double getDistanceFromTage(double ta) {
-        double scale = 3.085408;  // y value in equation
-        double distance = (scale / ta);
-        return distance;
+    public double getDistanceFromTage(double Ty) {
+        double angleToGoal = CameraAngle+Ty;
+        double heightDifferance = GoalHeight-CameraHeight;
+        return heightDifferance/Math.tan(Math.toRadians(angleToGoal));
     }
     Light light = new Light();
     WhiteLight whiteLight = new WhiteLight();
@@ -77,7 +77,7 @@ public class Teleop extends OpMode {
     public void start() {
         mecanumDrive.runWithoutEncoder();
         intake.init(this);
-        parking.init(this);
+        //parking.init(this);
         colorSensor.init(this);
         //fieldCentric.init(this);
         flyWheel.init(this);
@@ -89,14 +89,14 @@ public class Teleop extends OpMode {
     @Override
     public void loop() {
 
-        if(gamepad1.back || gamepad2.back) {
-            if(swapDelay.time() > .75) {
+        if (gamepad1.back || gamepad2.back) {
+            if (swapDelay.time() > .75) {
                 mode = !mode;
                 swapDelay.reset();
             }
         }
 
-        if(mode) {
+        if (mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
@@ -108,6 +108,7 @@ public class Teleop extends OpMode {
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
             flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
+            flyWheel.adjustLowVelocity(gamepad1.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad2.right_trigger);
 
             //parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
@@ -127,6 +128,7 @@ public class Teleop extends OpMode {
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
             flyWheel.flyWheelPower(gamepad1.left_trigger, gamepad1.right_trigger);
+            flyWheel.adjustLowVelocity(gamepad2.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad1.right_trigger);
 
             mecanumDrive.telemetryOutput();
@@ -135,53 +137,53 @@ public class Teleop extends OpMode {
         }
 
 
-
-        YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw());
         LLResult llResult = limelight.getLatestResult();
+        if (llResult != null && llResult.isValid()) {
+            distance = getDistanceFromTage(llResult.getTy());
+            telemetry.addData("Distance", distance);
+        } else {
+            telemetry.addData("No Valid Target", "Found");
+        }
+
+
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        limelight.updateRobotOrientation(orientation.getYaw());
         if (llResult != null && llResult.isValid()) {
             Pose3D botpose = llResult.getBotpose_MT2();
             distance = getDistanceFromTage(llResult.getTa());
-            telemetry.addData("distance", distance);
             telemetry.addData("Tx", llResult.getTx());
             telemetry.addData("Ta", llResult.getTa());
 
         }
-            double Tx = llResult.getTx();
+        double Tx = llResult.getTx();
 
-            if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
-                telemetry.addData("Tx", "TurretLeft");
-                intake.turretDirection(-0.2);
-            }
+        if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
+            telemetry.addData("Tx", "TurretLeft");
+            intake.turretDirection(-0.2);
+        } else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
+            telemetry.addData("Tx", "TurretRight");
+            intake.turretDirection(0.2);
+        } else {
+            telemetry.addData("Tx", "Good");
+            intake.turretDirection(0);
+        }
 
-            else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
-                telemetry.addData("Tx", "TurretRight");
-                intake.turretDirection(0.2);
-            }
-
-            else {
-                telemetry.addData("Tx", "Good");
-                intake.turretDirection(0);
-            }
-
-            telemetry.addData("Tx", "llresult.getTx");
-            telemetry.addData("Tx Value", Tx);
+        telemetry.addData("Tx", "llresult.getTx");
+        telemetry.addData("Tx Value", Tx);
 
         if (distance > 2.7) {
             light.setServoPos(0.277);
-        }
-
-        else if (distance > 1.28 && distance < 2.7) {
+        } else if (distance > 1.28 && distance < 2.7) {
             light.setServoPos(0.500);
-        }
-
-        else {
+        } else {
             light.setServoPos(0.388);
         }
-        if (flyWheel.getVelocity() < 1250 && flyWheel.getVelocity() > 1100) {
-            whiteLight.setServoPos(0.15);
-        }
 
+
+
+        if (flyWheel.getVelocity() < 1250 && flyWheel.getVelocity() > 1100) {
+                whiteLight.setServoPos(0.15);
+        }
         else {
             whiteLight.setServoPos(0.00);
         }
@@ -198,6 +200,6 @@ public class Teleop extends OpMode {
 
 
 
-        }
-
     }
+
+}

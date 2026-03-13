@@ -19,14 +19,16 @@ public class FlyWheel {
     private Telemetry telemetry;
 
     // Velocity targets
-    public double lowVelocity = 1105;
+    public double lowVelocity = 1125;
     public double highVelocity = 1300;
+    private boolean lastDpadUp = false;
+    private boolean lastDpadDown = false;
 
     // Fixed PIDF constants
-    private static final double kP =7;
+    private static final double kP =6.;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
-    private static final double kF = 9;
+    private static final double kF = 10.4;
     public double getVelocity() {
         return flywheelMaster.getVelocity();
     }
@@ -65,10 +67,26 @@ public class FlyWheel {
         }
 
 
+
         flywheelMaster.setVelocity(targetVelocity);
         flywheelSlave.setVelocity(targetVelocity);
     }
 
+    public void adjustLowVelocity(boolean dpadUp, boolean dpadDown) {  //tuning code
+
+        if (dpadUp && !lastDpadUp) {
+            lowVelocity += 10;
+        }
+
+        if (dpadDown && !lastDpadDown) {
+            lowVelocity -= 10;
+        }
+
+        lastDpadUp = dpadUp;
+        lastDpadDown = dpadDown;
+
+        telemetry.addData("Low Velocity Setting", lowVelocity);
+    }
     public void TelemetryOutput() {
 
         telemetry.addData("Target Velocity",
