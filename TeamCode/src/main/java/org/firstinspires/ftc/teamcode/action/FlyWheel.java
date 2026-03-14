@@ -20,7 +20,7 @@ public class FlyWheel {
 
     // Velocity targets
     public double lowVelocity = 1125;
-    public double highVelocity = 1300;
+    public double highVelocity = 1315;
     private boolean lastDpadUp = false;
     private boolean lastDpadDown = false;
 
