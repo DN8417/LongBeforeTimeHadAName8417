@@ -116,10 +116,10 @@ public class mecanumDrive {
         telemetry.addData("bRMotorPwr", df.format(backRightPower));
         telemetry.addData("bLMotorPwr", df.format(backLeftPower));
         // Ticks
-        telemetry.addData("Front Left Ticks", frontLeftDrive.getCurrentPosition());
+        //telemetry.addData("Front Left Ticks", frontLeftDrive.getCurrentPosition());
         telemetry.addData("Front Right Ticks", frontRightDrive.getCurrentPosition());
         telemetry.addData("Back Left Ticks", backLeftDrive.getCurrentPosition());
-        telemetry.addData("Back Right Ticks", backRightDrive.getCurrentPosition());
+        //telemetry.addData("Back Right Ticks", backRightDrive.getCurrentPosition());
 
        // telemetry.addData("Perpendicular Wheel", backLeftDrive.getCurrentPosition());
         // telemetry.addData("Parallel Wheel", frontRightDrive.getCurrentPosition());

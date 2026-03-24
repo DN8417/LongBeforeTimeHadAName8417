@@ -50,6 +50,8 @@ public class Teleop extends OpMode {
             intake.smallWheelSpin(gamepad2.b);
             intake.launch(gamepad2.left_trigger);
 
+            mecanumDrive.telemetryOutput();
+
 
 
         } else if (!mode) {
