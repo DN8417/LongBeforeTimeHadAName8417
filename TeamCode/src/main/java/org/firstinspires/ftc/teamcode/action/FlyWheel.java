@@ -17,22 +17,24 @@ public class FlyWheel {
     private double gearRatio = 3/2;
     private double  kV = 0.000171, kS = 0.09 , kP = 0.0009;
 
-    public double lowVelocity = -2000;
-    public double highVelocity = -2500;
+    public double lowVelocity = 3250;
+    public double highVelocity = 4750;
 
     private double  targetRpm;
+    Telemetry telemetry;
 
     private boolean lastDpadUp = false;
     private boolean lastDpadDown = false;
 
     public void init(@NonNull OpMode opMode) {
+        telemetry = opMode.telemetry;
         HardwareMap hardwareMap = opMode.hardwareMap;
 
         m1 = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
         m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
         m1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         m2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        m2.setDirection(DcMotorSimple.Direction.REVERSE);
+
     }
 
     public void setMotorPower(double power){
@@ -43,7 +45,7 @@ public class FlyWheel {
     public void setMotorRPM (float leftTrigger, float rightTrigger){
         if (leftTrigger > 0.5 && rightTrigger < 0.5){
             targetRpm = lowVelocity;
-            double error = targetRpm + getRPM();
+            double error = targetRpm - getRPM();
             double ff = (kV * targetRpm) + kS;
             double fb = error * kP;
             double power = ff + fb;
@@ -81,5 +83,8 @@ public class FlyWheel {
 
     public double getRPM(){
         return ((getTicksPerSec()/encoderCPM) * 60) / gearRatio;
+    }
+    public void telemetryOutput() {
+        telemetry.addData("Target Velocity", targetRpm);
     }
 }

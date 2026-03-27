@@ -117,6 +117,7 @@ public class Teleop extends OpMode {
 
             mecanumDrive.telemetryOutput();
             parking.telemetryOutput();
+            flyWheel.telemetryOutput();
 
         } else if (!mode) {
             //Controls for mecanumDrive()
@@ -135,6 +136,7 @@ public class Teleop extends OpMode {
 
             mecanumDrive.telemetryOutput();
             parking.telemetryOutput();
+            flyWheel.telemetryOutput();
 
         }
 
