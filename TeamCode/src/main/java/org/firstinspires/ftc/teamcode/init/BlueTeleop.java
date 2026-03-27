@@ -112,7 +112,7 @@ public class BlueTeleop extends OpMode {
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
-            flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
+            flyWheel.setMotorRPM(gamepad2.left_trigger, gamepad2.right_trigger);
             //parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
 
             mecanumDrive.telemetryOutput();
@@ -129,7 +129,7 @@ public class BlueTeleop extends OpMode {
             intake.startLoading(gamepad1.b);
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
-            flyWheel.flyWheelPower(gamepad1.left_trigger, gamepad1.right_trigger);
+            flyWheel.setMotorRPM(gamepad1.left_trigger, gamepad1.right_trigger);
             //intake.launch(gamepad1.right_trigger);
 
             mecanumDrive.telemetryOutput();
@@ -190,7 +190,7 @@ public class BlueTeleop extends OpMode {
         else {
             light.setServoPos(0.388);
         }
-        if (turretLauncher.getVelocity() > -1250 && turretLauncher.getVelocity() < -1100) {
+        if (turretLauncher.getVelocity() > -1250 && flyWheel.getRPM() < -1100) {
             whiteLight.setServoPos(0.25);
         }
 
@@ -204,7 +204,8 @@ public class BlueTeleop extends OpMode {
         colorSensor.getDetectedColor(telemetry);
         telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
         telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
-        telemetry.addData("Current Velocity", turretLauncher.getVelocity());
+        telemetry.addData("Current RPM", flyWheel.getRPM());
+
 
 
 

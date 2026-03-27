@@ -12,68 +12,60 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FlyWheel {
+    private DcMotorEx m1, m2;
+    private double encoderCPM = 28;
+    private double gearRatio = 3/2;
+    private double  kV = 0.000171, kS = 0.09 , kP = 0.0009;
 
-    private DcMotorEx flywheelMaster;
-    private DcMotorEx flywheelSlave;
+    public double lowVelocity = -2000;
+    public double highVelocity = -2500;
 
-    private Telemetry telemetry;
+    private double  targetRpm;
 
-    // Velocity targets
-    public double lowVelocity = 1125;
-    public double highVelocity = 1315;
     private boolean lastDpadUp = false;
     private boolean lastDpadDown = false;
 
-    // Fixed PIDF constants
-    private static final double kP =6.;
-    private static final double kI = 0.0;
-    private static final double kD = 0.0;
-    private static final double kF = 10.4;
-    public double getVelocity() {
-        return flywheelMaster.getVelocity();
-    }
-
     public void init(@NonNull OpMode opMode) {
-
         HardwareMap hardwareMap = opMode.hardwareMap;
-        telemetry = opMode.telemetry;
 
-        flywheelMaster = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
-        flywheelSlave  = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
-
-        flywheelSlave.setDirection(DcMotorSimple.Direction.FORWARD);
-        flywheelMaster.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        flywheelMaster.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        flywheelMaster.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        flywheelSlave.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // <-- FIXED
-
-        PIDFCoefficients pidf = new PIDFCoefficients(kP, kI, kD, kF);
-        flywheelMaster.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf);
-        flywheelSlave.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidf); // optional
-
-
+        m1 = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
+        m1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        m2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        m2.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public void flyWheelPower(float leftTrigger, float rightTrigger) {
+    public void setMotorPower(double power){
+        m1.setPower(power);
+        m2.setPower(power);
+    }
 
-        double targetVelocity = 0;
-
-        if (leftTrigger > 0.5 && rightTrigger < 0.5) {
-            targetVelocity = lowVelocity;
+    public void setMotorRPM (float leftTrigger, float rightTrigger){
+        if (leftTrigger > 0.5 && rightTrigger < 0.5){
+            targetRpm = lowVelocity;
+            double error = targetRpm + getRPM();
+            double ff = (kV * targetRpm) + kS;
+            double fb = error * kP;
+            double power = ff + fb;
+            setMotorPower(power);
         }
         else if (rightTrigger > 0.5 && leftTrigger < 0.5) {
-            targetVelocity = highVelocity;
+            targetRpm = highVelocity;
+            double error = targetRpm - getRPM();
+            double ff = (kV * targetRpm) + kS;
+            double fb = error * kP;
+            double power = ff + fb;
+            setMotorPower(power);
+        }
+        else {
+            setMotorPower(0);
         }
 
 
 
-        flywheelMaster.setVelocity(targetVelocity);
-        flywheelSlave.setVelocity(targetVelocity);
     }
 
-    public void adjustLowVelocity(boolean dpadUp, boolean dpadDown) {  //tuning code
-
+    public void adjustLowVelocity (boolean dpadUp, boolean dpadDown) {
         if (dpadUp && !lastDpadUp) {
             lowVelocity += 10;
         }
@@ -81,18 +73,13 @@ public class FlyWheel {
         if (dpadDown && !lastDpadDown) {
             lowVelocity -= 10;
         }
-
-        lastDpadUp = dpadUp;
-        lastDpadDown = dpadDown;
-
-        telemetry.addData("Low Velocity Setting", lowVelocity);
     }
-    public void TelemetryOutput() {
 
-        telemetry.addData("Target Velocity",
-                flywheelMaster.getVelocity());
+    public double getTicksPerSec(){
+        return m1.getVelocity();
+    }
 
-        telemetry.addData("Actual Velocity",
-                flywheelMaster.getVelocity());
+    public double getRPM(){
+        return ((getTicksPerSec()/encoderCPM) * 60) / gearRatio;
     }
 }

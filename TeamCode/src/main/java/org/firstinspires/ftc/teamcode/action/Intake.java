@@ -43,11 +43,9 @@ public class Intake {
         ziptieWheel3 = hardwareMap.get(CRServo.class, "Ziptie Wheel 3");
 
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        turretLauncher.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        turretLauncher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 

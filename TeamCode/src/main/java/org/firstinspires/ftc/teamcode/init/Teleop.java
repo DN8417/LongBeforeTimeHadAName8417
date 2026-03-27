@@ -37,16 +37,18 @@ public class Teleop extends OpMode {
     private double GoalHeight = 74.95;
     private double distance = 0;
     boolean mode = true;
-//hello world
+    //hello world
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
     //FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
+
     public double getDistanceFromTage(double Ty) {
-        double angleToGoal = CameraAngle+Ty;
-        double heightDifferance = GoalHeight-CameraHeight;
-        return heightDifferance/Math.tan(Math.toRadians(angleToGoal));
+        double angleToGoal = CameraAngle + Ty;
+        double heightDifferance = GoalHeight - CameraHeight;
+        return heightDifferance / Math.tan(Math.toRadians(angleToGoal));
     }
+
     Light light = new Light();
     WhiteLight whiteLight = new WhiteLight();
 
@@ -66,8 +68,8 @@ public class Teleop extends OpMode {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0); // april tag #11 pipeline
 
-        imu= hardwareMap.get(IMU.class, "imu");
-        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
@@ -107,7 +109,7 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
-            flyWheel.flyWheelPower(gamepad2.left_trigger, gamepad2.right_trigger);
+            flyWheel.setMotorRPM(gamepad2.left_trigger, gamepad2.right_trigger);
             flyWheel.adjustLowVelocity(gamepad1.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad2.right_trigger);
 
@@ -127,7 +129,7 @@ public class Teleop extends OpMode {
             intake.startLoading(gamepad1.b);
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
-            flyWheel.flyWheelPower(gamepad1.left_trigger, gamepad1.right_trigger);
+            flyWheel.setMotorRPM(gamepad1.left_trigger, gamepad1.right_trigger);
             flyWheel.adjustLowVelocity(gamepad2.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad1.right_trigger);
 
@@ -180,24 +182,19 @@ public class Teleop extends OpMode {
         }
 
 
-
-        if (flyWheel.getVelocity() < 1250 && flyWheel.getVelocity() > 1100) {
-                whiteLight.setServoPos(0.15);
-        }
-        else {
+        if (flyWheel.getRPM() < 1250 && flyWheel.getRPM() > 1100) {
+            whiteLight.setServoPos(0.15);
+        } else {
             whiteLight.setServoPos(0.00);
         }
 
 
-
-            telemetry.addData("CurrentMode: ", mode ? 0 : 1);
-            colorSensor.getDetectedColor(telemetry);
-            telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
-            telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
-            telemetry.addData("Endgame Sensor is Pressed", touchsensor.endgameTouchSensorPressed());
-            telemetry.addData("Current Velocity", flyWheel.getVelocity());
-
-
+        telemetry.addData("CurrentMode: ", mode ? 0 : 1);
+        colorSensor.getDetectedColor(telemetry);
+        telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
+        telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
+        telemetry.addData("Endgame Sensor is Pressed", touchsensor.endgameTouchSensorPressed());
+        telemetry.addData("Current RPM", flyWheel.getRPM());
 
 
     }
