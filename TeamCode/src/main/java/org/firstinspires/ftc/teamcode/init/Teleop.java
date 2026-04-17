@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 //import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
+import org.firstinspires.ftc.teamcode.action.FieldCentricTest;
 import org.firstinspires.ftc.teamcode.action.Light;
 import org.firstinspires.ftc.teamcode.action.ColorSensor;
 import org.firstinspires.ftc.teamcode.action.Parking;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.action.Parking;
 import org.firstinspires.ftc.teamcode.action.FlyWheel;
 import org.firstinspires.ftc.teamcode.action.WhiteLight;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
-import org.firstinspires.ftc.teamcode.action.mecanumDrive;
+//import org.firstinspires.ftc.teamcode.action.mecanumDrive;
 import org.firstinspires.ftc.teamcode.action.Intake;
 
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -26,7 +27,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 @TeleOp (name = "TeleOp", group = "Main")
 public class Teleop extends OpMode {
-    mecanumDrive mecanumDrive = new mecanumDrive();
+    //mecanumDrive mecanumDrive = new mecanumDrive();
     Intake intake = new Intake();
     Parking parking = new Parking();
     ColorSensor colorSensor = new ColorSensor();
@@ -40,7 +41,7 @@ public class Teleop extends OpMode {
     //hello world
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
-    //FieldCentricTest fieldCentric = new FieldCentricTest();
+    FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
 
     public double getDistanceFromTage(double Ty) {
@@ -55,12 +56,12 @@ public class Teleop extends OpMode {
     @Override
     public void init() {
         //Initialize our motors
-        mecanumDrive.init(this);
+        //mecanumDrive.init(this);
         intake.init(this);
         parking.init(this);
         colorSensor.init(this);
         touchsensor.init(this);
-        //fieldCentric.init(this);
+        fieldCentric.init(this);
         flyWheel.init(this);
         light.init(this);
         whiteLight.init(this);
@@ -69,7 +70,7 @@ public class Teleop extends OpMode {
         limelight.pipelineSwitch(0); // april tag #11 pipeline
 
         imu = hardwareMap.get(IMU.class, "imu");
-        RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+        RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
@@ -77,11 +78,11 @@ public class Teleop extends OpMode {
     }
 
     public void start() {
-        mecanumDrive.runWithoutEncoder();
+        //mecanumDrive.runWithoutEncoder();
         intake.init(this);
         //parking.init(this);
         colorSensor.init(this);
-        //fieldCentric.init(this);
+        fieldCentric.init(this);
         flyWheel.init(this);
         touchsensor.init(this);
         limelight.start();
@@ -100,8 +101,8 @@ public class Teleop extends OpMode {
 
         if (mode) {
             //Controls for mecanumDrive()
-            mecanumDrive.slowMode(gamepad1.left_bumper);
-            mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            fieldCentric.slowMode(gamepad1.left_bumper);
+            fieldCentric.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             intake.parkingTurretDirection(gamepad1.a, gamepad1.b);
             //parking.buttonParking(gamepad2.left_stick_y, gamepad1.x);
 
@@ -115,18 +116,18 @@ public class Teleop extends OpMode {
 
             //parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
 
-            mecanumDrive.telemetryOutput();
+            fieldCentric.telemetryOutput();
             parking.telemetryOutput();
             flyWheel.telemetryOutput();
 
-            mecanumDrive.telemetryOutput();
+            fieldCentric.telemetryOutput();
 
 
 
         } else if (!mode) {
             //Controls for mecanumDrive()
-            mecanumDrive.slowMode(gamepad2.left_bumper);
-            mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
+            fieldCentric.slowMode(gamepad2.left_bumper);
+            fieldCentric.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x);
             intake.parkingTurretDirection(gamepad2.a, gamepad2.b);
             //parking.buttonParking(gamepad1.left_stick_y, gamepad1.x);
 
@@ -138,7 +139,7 @@ public class Teleop extends OpMode {
             flyWheel.adjustLowVelocity(gamepad2.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad1.right_trigger);
 
-            mecanumDrive.telemetryOutput();
+            fieldCentric.telemetryOutput();
             parking.telemetryOutput();
             flyWheel.telemetryOutput();
 
