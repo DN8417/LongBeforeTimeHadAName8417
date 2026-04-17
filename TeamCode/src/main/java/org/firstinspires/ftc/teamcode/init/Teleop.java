@@ -119,6 +119,10 @@ public class Teleop extends OpMode {
             parking.telemetryOutput();
             flyWheel.telemetryOutput();
 
+            mecanumDrive.telemetryOutput();
+
+
+
         } else if (!mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
@@ -197,6 +201,7 @@ public class Teleop extends OpMode {
         telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
         telemetry.addData("Endgame Sensor is Pressed", touchsensor.endgameTouchSensorPressed());
         telemetry.addData("Current RPM", flyWheel.getRPM());
+
 
 
     }
