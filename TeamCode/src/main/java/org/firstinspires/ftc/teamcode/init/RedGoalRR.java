@@ -1,5 +1,7 @@
 //package org.firstinspires.ftc.teamcode.init;
 //
+//import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+//
 //import com.acmerobotics.roadrunner.Action;
 //import com.acmerobotics.roadrunner.ParallelAction;
 //import com.acmerobotics.roadrunner.Pose2d;
@@ -30,7 +32,7 @@
 //
 //        Actions.runBlocking(
 //                new SequentialAction(
-//                        IntakeRR.IntakeArtifactsIn()
+//                        IntakeRR.IntakeArtifactsIn(hardwareMap)
 //                )
 //        );
 //
