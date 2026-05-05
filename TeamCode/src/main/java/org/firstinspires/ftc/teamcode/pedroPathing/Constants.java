@@ -42,8 +42,8 @@ public class Constants {
             .IMU_HardwareMapName("imu")
             .strafePodX(-3.104809075238)
             .forwardPodY(-2.633303175321418)
-            .forwardTicksToInches(0.002393337235080245)
-            .strafeTicksToInches(0.0011878659835586423)
+            .forwardTicksToInches(0.0023650339697142407)
+            .strafeTicksToInches(7.236324754230489E-4)
             .forwardEncoderDirection(Encoder.REVERSE)
             .strafeEncoderDirection(Encoder.REVERSE)
             .IMU_Orientation(
