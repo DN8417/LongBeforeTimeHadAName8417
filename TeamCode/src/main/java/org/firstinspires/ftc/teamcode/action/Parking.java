@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.action;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -19,6 +15,8 @@ public class Parking {
     private Servo endgameServo3;
     private Servo endgameServo4;
     Telemetry telemetry;
+    boolean xWasPressed = false;
+    boolean lastX = false;
 
     public void init(@NonNull OpMode opMode){
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -28,13 +26,29 @@ public class Parking {
         endgameServo3 = hardwareMap.get(Servo.class, "Endgame Servo 3");
         endgameServo4 = hardwareMap.get(Servo.class, "Endgame Servo 4");
 
+        endgameServo1.setPosition(1.0);
+        endgameServo2.setPosition(1.0);
+        endgameServo3.setPosition(0.0);
+        endgameServo4.setPosition(0.0);
+
     }
 
-    public void setServoPos(double angle) {
-        endgameServo1.setPosition(angle);
-        endgameServo2.setPosition(angle);
-        endgameServo3.setPosition(angle);
-        endgameServo4.setPosition(angle);
+    public void setServoPos() {
+        endgameServo1.setPosition(0.6);
+        endgameServo2.setPosition(0.6);
+        endgameServo3.setPosition(0.4);
+        endgameServo4.setPosition(0.4);
+    }
+
+    public void buttonParking(boolean x) {
+        if (x && !lastX) {
+            xWasPressed = !xWasPressed;
+        }
+
+        if (xWasPressed) {
+            setServoPos();
+        }
+
     }
 
     public void telemetryOutput(){

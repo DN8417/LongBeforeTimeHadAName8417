@@ -111,7 +111,12 @@ public class BlueTeleop extends OpMode {
             intake.startLoading(gamepad2.b);
             intake.finishLoading(gamepad2.dpad_up || gamepad2.dpad_down);
             intake.smallWheelSpin(gamepad2.b);
-            flyWheel.setMotorRPM(gamepad2.left_trigger, gamepad2.right_trigger);
+            flyWheel.setMotorRPM(
+                    gamepad2.left_trigger,
+                    gamepad2.right_trigger,
+                    gamepad2.x,
+                    distance
+            );
             //parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
 
             mecanumDrive.telemetryOutput();
@@ -128,7 +133,12 @@ public class BlueTeleop extends OpMode {
             intake.startLoading(gamepad1.b);
             intake.finishLoading(gamepad1.dpad_up || gamepad1.dpad_down);
             intake.smallWheelSpin(gamepad1.b);
-            flyWheel.setMotorRPM(gamepad1.left_trigger, gamepad1.right_trigger);
+            flyWheel.setMotorRPM(
+                    gamepad1.left_trigger,
+                    gamepad1.right_trigger,
+                    gamepad1.x,
+                    distance
+            );
             //intake.launch(gamepad1.right_trigger);
 
             mecanumDrive.telemetryOutput();
