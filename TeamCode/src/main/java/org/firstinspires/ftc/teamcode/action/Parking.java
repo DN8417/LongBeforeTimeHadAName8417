@@ -48,6 +48,13 @@ public class Parking {
         if (xWasPressed) {
             setServoPos();
         }
+        else {
+            endgameServo1.setPosition(1.0);
+            endgameServo2.setPosition(1.0);
+            endgameServo3.setPosition(0.0);
+            endgameServo4.setPosition(0.0);
+        }
+        lastX = x;
 
     }
 

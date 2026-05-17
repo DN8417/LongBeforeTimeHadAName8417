@@ -186,11 +186,11 @@ public class Teleop extends OpMode {
         telemetry.addData("Tx Value", Tx);
 
         if (distance > 2.7) {
+            light.setServoPos(0.0);
+        } else if (distance > 115 && distance < 194) {
             light.setServoPos(0.277);
-        } else if (distance > 1.28 && distance < 2.7) {
-            light.setServoPos(0.500);
         } else {
-            light.setServoPos(0.388);
+            light.setServoPos(0.0);
         }
 
 
