@@ -40,11 +40,11 @@ public class Constants {
             .forwardEncoder_HardwareMapName("Front Right")
             .strafeEncoder_HardwareMapName("Back Left")
             .IMU_HardwareMapName("imu")
-            .strafePodX(-3.104809075238)
-            .forwardPodY(-2.633303175321418)
-            .forwardTicksToInches(0.0023650339697142407)
-            .strafeTicksToInches(7.236324754230489E-4)
-            .forwardEncoderDirection(Encoder.REVERSE)
+            .strafePodX(56.50144495738053)
+            .forwardPodY(-3.104809075238)
+            .forwardTicksToInches(0.004)
+            .strafeTicksToInches(0.0021708974262691467)
+            .forwardEncoderDirection(Encoder.FORWARD)
             .strafeEncoderDirection(Encoder.REVERSE)
             .IMU_Orientation(
                     new RevHubOrientationOnRobot(
