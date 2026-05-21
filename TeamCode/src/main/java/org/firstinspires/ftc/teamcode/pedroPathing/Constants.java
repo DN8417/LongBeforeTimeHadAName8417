@@ -22,10 +22,12 @@ public class Constants {
             .forwardZeroPowerAcceleration(-36.610346876398026)
             .forwardZeroPowerAcceleration(-59.93356521686264);
 
-    public static PathConstraints pathConstraints = new PathConstraints(0.99,
+    public static PathConstraints pathConstraints = new PathConstraints(
+            0.99,
             100,
             1.5,
-            1);
+            1
+    );
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
