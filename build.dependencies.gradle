@@ -1,11 +1,19 @@
 repositories {
+
+    // FTC Robot Controller
     mavenCentral()
     google() // Needed for androidx
+
+    // Pedro Pathing
     maven { url = "https://mymaven.bylazar.com/releases" }
-    maven { url = 'https://maven.brott.dev/' }
+
+    // FTC Dashboard
+    // maven { url = 'https://maven.brott.dev/' }
 }
 
 dependencies {
+
+    // FTC Robot Controller
     implementation 'org.firstinspires.ftc:Inspection:11.1.0'
     implementation 'org.firstinspires.ftc:Blocks:11.1.0'
     implementation 'org.firstinspires.ftc:RobotCore:11.1.0'
@@ -15,9 +23,13 @@ dependencies {
     implementation 'org.firstinspires.ftc:FtcCommon:11.1.0'
     implementation 'org.firstinspires.ftc:Vision:11.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.pedropathing:ftc:2.1.1'
+
+    // Pedro Pathing
+    implementation 'com.pedropathing:ftc:2.1.2'
     implementation 'com.pedropathing:telemetry:1.0.0'
     implementation 'com.bylazar:fullpanels:1.0.12'
-    implementation 'com.acmerobotics.dashboard:dashboard:0.6.0'
+
+    // FTC Dashboard
+    // implementation 'com.acmerobotics.dashboard:dashboard:0.6.0'
 }
 
