@@ -25,7 +25,8 @@ public class RedSideAuto extends LinearOpMode {
     public DcMotor backRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor rubberBandWheel;
-    public DcMotorEx turretLauncher;
+    public DcMotorEx m1;
+    public DcMotorEx m2;
     public CRServo smallWheel;
     public CRServo intakePartTwo;
     public DcMotor intakeMotor;
@@ -34,6 +35,9 @@ public class RedSideAuto extends LinearOpMode {
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
     private CRServo turretMotor;
+    private double kV = 0.000171, kS = 0.09, kP = 0.0009;
+    public double lowVelocity = 3250;
+    public double highVelocity = 4750;
 
     public ElapsedTime timer = new ElapsedTime();
 
@@ -45,7 +49,8 @@ public class RedSideAuto extends LinearOpMode {
         backRightDrive = hardwareMap.get(DcMotor.class, "Back Right");
         backLeftDrive = hardwareMap.get(DcMotor.class, "Back Left");
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        m1 = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        //m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
@@ -55,6 +60,9 @@ public class RedSideAuto extends LinearOpMode {
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        //m1.setDirection(DcMotor.Direction.REVERSE);
+        //m2.setDirection(DcMotor.Direction.REVERSE);
 
         touchsensor.init(this);
 
@@ -67,63 +75,63 @@ public class RedSideAuto extends LinearOpMode {
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
         PIDFCoefficients pidfCoefficients = new PIDFCoefficients(19, 0, 0, -150);
-        turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
+        m1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
         waitForStart();
         limelight.start();
 
         // Forward
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.7);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.7);
         // Moves right
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.6);
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.6);
         // Forward again
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.3);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.3);
         // Turns left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.38);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.38);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 0.00, 0.00, 1.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1400, -1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1400, -1.00, 1.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1400, -1.00, 1.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 1.00, -0.7, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 0.00, 0.00, 1.5);
         // Turns Left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1400, 0.00, 0.00, 0.00, 0.55);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.47);
         // Moves forward and intakes more artifacts
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -1400, -1.00, 1.00, -0.5, 1.5);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -700, 1.00, 1.00, -0.5, 1.8);
         // Moving the artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1400, -1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 1.00, 1.00, -0.5, 1.0);
         // Moves back while still intaking
-        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -1350, -1.00, 1.00, -0.5, 0.001);
+        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -700, 1.00, 1.00, -0.5, 0.001);
         //Moves Forward to correct itself
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -1350, -1.00, 1.00, -0.5, 0.8);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -700, 1.00, 1.00, -0.5, 0.8);
         // Turn Left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1350, -1.00, 1.00, -0.5, 0.6);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -700, 1.00, 1.00, -0.5, 0.6);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1350, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 1.00, 0.00, 1.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1350, -1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 1.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1350, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1350, -1.00, 1.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -1350, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -700, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -1350, -1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -700, 1.00, 0.00, -0.7, 1.0);
         // Turns Left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -1350, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.4);
         // move right to line up with the artifacts
-        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -1350, 0.00, 0.00, 0.00, 0.6);
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -700, 0.00, 0.00, 0.00, 0.6);
         // moving backwards and picking up 3 more
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -1350, 0.00, 1.00, -0.5, 1.0);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -700, 0.00, 1.00, -0.5, 1.0);
         // moving forward to move back into place
         //mecanumDrive(0.3, 0.3, 0.3, 0.3, 0.00, 0.5, 0.00, 1.00, -0.5, 0.5);
         // moving left
@@ -145,7 +153,8 @@ public class RedSideAuto extends LinearOpMode {
             backRightDrive.setPower(backRightPower);
             backLeftDrive.setPower(backLeftPower);
             rubberBandWheel.setPower(rubberBandPower);
-            turretLauncher.setVelocity(launcherVelocity);
+            m1.setVelocity(launcherVelocity);
+            //m2.setVelocity(launcherVelocity);
             smallWheel.setPower(smallWheelPower);
             intakePartTwo.setPower(secondIntakePower);
             intakeMotor.setPower(intakePower);
