@@ -43,6 +43,7 @@ public class Mecanum extends Drivetrain {
      * @param hardwareMap      this is the HardwareMap object that contains the motors and other hardware
      * @param mecanumConstants this is the MecanumConstants object that contains the names of the motors and directions etc.
      */
+    public Mecanum(
     public Mecanum(HardwareMap hardwareMap, MecanumConstants mecanumConstants) {
         constants = mecanumConstants;
 

@@ -21,7 +21,7 @@ import com.pedropathing.util.NanoTimer;
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 4/2/2024
  */
-
+public TwoWheelLocalizer(
 public class TwoWheelLocalizer implements Localizer {
     private final CustomIMU imu;
     private Pose startPose;
@@ -31,13 +31,6 @@ public class TwoWheelLocalizer implements Localizer {
     private final NanoTimer timer;
     private long deltaTimeNano;
     private final Encoder forwardEncoder;
-    private final Encoder strafeEncoder;
-    private final double strafePodX;
-    private final double forwardPodY;
-    private double previousIMUOrientation;
-    private double deltaRadians;
-    private double totalHeading;
-    public static double FORWARD_TICKS_TO_INCHES;
     public static double STRAFE_TICKS_TO_INCHES;
 
     /**
@@ -50,6 +43,13 @@ public class TwoWheelLocalizer implements Localizer {
         this(map, constants, new Pose());
     }
 
+    private final Encoder strafeEncoder;
+    private final double strafePodX;
+    private final double forwardPodY;
+    private double previousIMUOrientation;
+    private double deltaRadians;
+    private double totalHeading;
+    public static double FORWARD_TICKS_TO_INCHES;
     /**
      * This creates a new TwoWheelLocalizer from a HardwareMap and a Pose, with the Pose
      * specifying the starting pose of the localizer.
