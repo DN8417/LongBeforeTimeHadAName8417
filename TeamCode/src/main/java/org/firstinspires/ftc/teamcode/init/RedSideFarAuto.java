@@ -39,7 +39,7 @@ public class RedSideFarAuto extends LinearOpMode {
     private double gearRatio = 3 / 2;
     private double kV = 0.000171, kS = 0.09, kP = 0.0009;
     public double lowVelocity = 3250;
-    public double highVelocity = 4500;
+    public double highVelocity = 4525;
     private double targetRpm = highVelocity;
     Telemetry telemetry;
     boolean lastX = false;
@@ -112,11 +112,11 @@ public class RedSideFarAuto extends LinearOpMode {
         // Wait for a moment
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -200, 0.00, 1.00, -0.5, 1.0);
         // Moves Backwards while intaking
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -200, 0.00, 1.00, -0.5, 2.2);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -200, 0.00, 1.00, -0.5, 2.5);
         // Moving artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -200, 1.00, 1.00, -0.5, 2.3);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -200, 1.00, 1.00, -0.5, 2.2);
         // Moving back into position
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -200, 0.00, 0.00, 0.00, 0.7);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -200, 0.00, 0.00, 0.00, 0.9);
         mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -200, 0.00, 0.00, 0.00, 0.2);
         mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -200, 0.00, 0.00, 0.00, 0.3);
         mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -200, 0.00, 0.00, 0.00, 0.2);
