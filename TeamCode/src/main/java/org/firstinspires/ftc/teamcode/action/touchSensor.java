@@ -21,11 +21,7 @@ public class touchSensor {
     }
 
     public boolean leftTouchSensorIsPressed () {
-        if(leftTouchSensor.isPressed()) {
-            return true;
-        } else {
-            return false;
-        }
+        return leftTouchSensor.isPressed();
     }
     public boolean rightTouchSensorIsPressed () {
         return rightTouchSensor.isPressed();

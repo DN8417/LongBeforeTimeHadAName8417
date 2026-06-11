@@ -65,7 +65,11 @@ public class TwoWheelLocalizer implements Localizer {
         forwardPodY = constants.forwardPodY;
 
         imu.initialize(map, constants.IMU_HardwareMapName, constants.IMU_Orientation);
+        System.out.println("Forward Encoder = " +
+                constants.forwardEncoder_HardwareMapName);
 
+        System.out.println("Strafe Encoder = " +
+                constants.strafeEncoder_HardwareMapName);
         forwardEncoder = new Encoder(map.get(DcMotorEx.class, constants.forwardEncoder_HardwareMapName));
         strafeEncoder = new Encoder(map.get(DcMotorEx.class, constants.strafeEncoder_HardwareMapName));
 

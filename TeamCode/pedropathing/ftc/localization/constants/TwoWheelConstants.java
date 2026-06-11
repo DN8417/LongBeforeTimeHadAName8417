@@ -37,12 +37,12 @@ public class TwoWheelConstants {
     public String IMU_HardwareMapName = "imu";
 
     /** The Hardware Map Name of the Forward Encoder (name of the motor port it is plugged into)
-     * Default Value: "leftFront" */
-    public String forwardEncoder_HardwareMapName = "leftFront";
+     * Default Value: "Front Left" */
+    public String forwardEncoder_HardwareMapName = "Front Left";
 
     /** The Hardware Map Name of the Strafe Encoder (name of the motor port it is plugged into)
      * Default Value: "rightRear" */
-    public String strafeEncoder_HardwareMapName = "rightRear";
+    public String strafeEncoder_HardwareMapName = "Back Right";
 
     /** The Orientation of the IMU on the robot
      * Default Value: new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT) */
@@ -132,8 +132,8 @@ public class TwoWheelConstants {
         forwardPodY = 1;
         strafePodX = -2.5;
         IMU_HardwareMapName = "imu";
-        forwardEncoder_HardwareMapName = "leftFront";
-        strafeEncoder_HardwareMapName = "rightRear";
+        forwardEncoder_HardwareMapName = "Front Left";
+        strafeEncoder_HardwareMapName = "Back Right";
         IMU_Orientation = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT);
         forwardEncoderDirection = Encoder.REVERSE;
         strafeEncoderDirection = Encoder.FORWARD;

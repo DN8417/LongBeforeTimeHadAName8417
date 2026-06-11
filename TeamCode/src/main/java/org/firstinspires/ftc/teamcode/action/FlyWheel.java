@@ -13,9 +13,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class FlyWheel {
     private DcMotorEx m1, m2;
-    private double encoderCPM = 28;
-    private double gearRatio = 3 / 2;
-    private double kV = 0.000171, kS = 0.09, kP = 0.0009;
+    private final double encoderCPM = 28;
+    private final double gearRatio = 3 / 2;
+    private final double kV = 0.000171;
+    private final double kS = 0.09;
+    private final double kP = 0.0009;
 
     public double lowVelocity = 3250;
     public double highVelocity = 4750;
@@ -26,8 +28,8 @@ public class FlyWheel {
     boolean flywheelToggle = false;
 
 
-    private boolean lastDpadUp = false;
-    private boolean lastDpadDown = false;
+    private final boolean lastDpadUp = false;
+    private final boolean lastDpadDown = false;
 
     public void init(@NonNull OpMode opMode) {
         telemetry = opMode.telemetry;

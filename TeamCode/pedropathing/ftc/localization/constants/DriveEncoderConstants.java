@@ -16,10 +16,10 @@ public class DriveEncoderConstants {
     public double leftRearEncoderDirection = Encoder.REVERSE;
     public double rightRearEncoderDirection = Encoder.FORWARD;
 
-    public String leftFrontMotorName = "leftFront";
-    public String leftRearMotorName = "leftRear";
-    public String rightFrontMotorName = "rightFront";
-    public String rightRearMotorName = "rightRear";
+    public String leftFrontMotorName = "Front Left";
+    public String leftRearMotorName = "Back Left";
+    public String rightFrontMotorName = "Front Right";
+    public String rightRearMotorName = "Back Right";
 
     public DriveEncoderConstants forwardTicksToInches(double forwardTicksToInches) {
         this.forwardTicksToInches = forwardTicksToInches;
@@ -99,9 +99,9 @@ public class DriveEncoderConstants {
         leftRearEncoderDirection = Encoder.REVERSE;
         rightRearEncoderDirection = Encoder.FORWARD;
 
-        leftFrontMotorName = "leftFront";
-        leftRearMotorName = "leftRear";
-        rightFrontMotorName = "rightFront";
-        rightRearMotorName = "rightRear";
+        leftFrontMotorName = "Front Left";
+        leftRearMotorName = "Back Left";
+        rightFrontMotorName = "Front Right";
+        rightRearMotorName = "Back Right";
     }
 }

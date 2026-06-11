@@ -12,6 +12,8 @@ public class MecanumConstants {
     /** The Lateral Velocity of the Robot - Different for each robot
      *  Default Value: 65.43028 */
     public  double yVelocity = 65.43028;
+    leftFrontMotorName
+            rightFrontMotorName
 
     private  double[] convertToPolar = Pose.cartesianToPolar(xVelocity, -yVelocity);
 
@@ -21,10 +23,10 @@ public class MecanumConstants {
      */
     public  Vector frontLeftVector = new Vector(convertToPolar[0], convertToPolar[1]).normalize();
     public  double maxPower = 1;
-    public  String leftFrontMotorName = "leftFront";
-    public  String leftRearMotorName = "leftRear";
-    public  String rightFrontMotorName = "rightFront";
-    public  String rightRearMotorName = "rightRear";
+    public  String leftFrontMotorName = "Front Left";
+    public  String leftRearMotorName = "Back Left";
+    public  String rightFrontMotorName = "Front Right";
+    public  String rightRearMotorName = "Back Right";
     public  DcMotorSimple.Direction leftFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
     public  DcMotorSimple.Direction leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
     public  DcMotorSimple.Direction rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
@@ -241,10 +243,10 @@ public class MecanumConstants {
         convertToPolar = Pose.cartesianToPolar(xVelocity, -yVelocity);
         frontLeftVector = new Vector(convertToPolar[0], convertToPolar[1]).normalize();
         maxPower = 1;
-        leftFrontMotorName = "leftFront";
-        leftRearMotorName = "leftRear";
-        rightFrontMotorName = "rightFront";
-        rightRearMotorName = "rightRear";
+        leftFrontMotorName = "Front Left";
+        leftRearMotorName = "Back Left";
+        rightFrontMotorName = "Front Right";
+        rightRearMotorName = "Back Right";
         leftFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
         leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
         rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;

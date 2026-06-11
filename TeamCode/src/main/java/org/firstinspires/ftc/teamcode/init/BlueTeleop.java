@@ -34,9 +34,9 @@ public class BlueTeleop extends OpMode {
     ColorSensor colorSensor = new ColorSensor();
     private IMU imu;
     private Limelight3A limelight;
-    private double CameraHeight = 41.958;
-    private double CameraAngle = 21;
-    private double GoalHeight = 74.95;
+    private final double CameraHeight = 41.958;
+    private final double CameraAngle = 21;
+    private final double GoalHeight = 74.95;
     private double distance = 0;
     boolean mode = true;
     ElapsedTime swapDelay = new ElapsedTime();

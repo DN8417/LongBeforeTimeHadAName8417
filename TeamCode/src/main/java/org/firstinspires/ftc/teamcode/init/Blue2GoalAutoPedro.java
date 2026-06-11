@@ -18,6 +18,8 @@ import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+
 @Autonomous(name = "Pedro Pathing Autonomous", group = "Autonomous")
 @Configurable
 public class Blue2GoalAutoPedro extends OpMode {
@@ -25,17 +27,29 @@ public class Blue2GoalAutoPedro extends OpMode {
     private Follower follower;
     private Paths paths;
     private int pathState = 0;
+    @Override
+    public void start() {
+        pathState = 0;
 
+        if (follower != null) {
+            follower.followPath(paths.toShoot);
+        }
+    }
     @Override
     public void init() {
 
         FollowerConstants followerConstants = new FollowerConstants();
-
-        TwoWheelConstants twoWheelConstants = new TwoWheelConstants();
         MecanumConstants mecanumConstants = new MecanumConstants();
 
         Localizer localizer =
-                new TwoWheelLocalizer(hardwareMap, twoWheelConstants);
+                new TwoWheelLocalizer(
+                        hardwareMap,
+                        Constants.localizerConstants
+                );
+        mecanumConstants.leftFrontMotorName = "Front Left";
+        mecanumConstants.rightFrontMotorName = "Front Right";
+        mecanumConstants.leftRearMotorName = "Back Left";
+        mecanumConstants.rightRearMotorName = "Back Right";
 
         Drivetrain drivetrain =
                 new Mecanum(hardwareMap, mecanumConstants);
@@ -58,7 +72,6 @@ public class Blue2GoalAutoPedro extends OpMode {
 
         paths = new Paths(follower);
     }
-
     @Override
     public void loop() {
         if (follower != null) {

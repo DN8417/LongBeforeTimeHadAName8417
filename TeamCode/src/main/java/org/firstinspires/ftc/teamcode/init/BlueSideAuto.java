@@ -31,7 +31,9 @@ public class BlueSideAuto extends LinearOpMode {
     public DcMotor intakeMotor;
     private IMU imu;
     private double distance;
-    private double kV = 0.000171, kS = 0.09, kP = 0.0009;
+    private final double kV = 0.000171;
+    private final double kS = 0.09;
+    private final double kP = 0.0009;
     public double lowVelocity = 3250;
     public double highVelocity = 4750;
     private Limelight3A limelight;
