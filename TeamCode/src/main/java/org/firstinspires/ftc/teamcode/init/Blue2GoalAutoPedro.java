@@ -68,7 +68,9 @@ public class Blue2GoalAutoPedro extends OpMode {
                 pathConstraints
         );
 
-        follower.setStartingPose(new Pose(22, 120));
+        follower.setStartingPose(
+                new Pose(22, 120, Math.toRadians(90))
+        );
 
         paths = new Paths(follower);
     }
