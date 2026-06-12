@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.init;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
+
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -13,6 +15,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
@@ -39,7 +42,6 @@ public class BlueSideAuto extends LinearOpMode {
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
     private CRServo turretMotor;
-
 
     public ElapsedTime timer = new ElapsedTime();
 
@@ -78,64 +80,58 @@ public class BlueSideAuto extends LinearOpMode {
         waitForStart();
         limelight.start();
 
-        // Forward
-        //mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.7);
-        // Moves left
-        //mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.6);
-        // Forward again
-        //mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.3);
-        // Turns right
-        //mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.4);
         // Moves backward into position
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.5);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -450, 0.00, 0.00, 0.00, 0.5);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 0.00, 0.00, 1.2);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 0.00, 0.00, 1.2);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 0.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 1.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 1.00, -0.7, 1.0);a
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Moves left
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -600, 0.00, 1.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -450, 0.00, 1.00, 0.00, 0.4);
         // Turns Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -600, 0.00, 1.00, 0.00, 0.6);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -450, 0.00, 1.00, 0.00, 0.55);
         // Moves left to not hit the gate
-        mecanumDrive(-0.5, 0.5, 0.5, -0.5, 0.00, -600, 0.00, 1.00, 0.00, 0.1);
+        mecanumDrive(-0.5, 0.5, 0.5, -0.5, 0.00, -450, 0.00, 1.00, 0.00, 0.05);
         // Moves forward and intakes more artifacts
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -600, 1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -450, 1.00, 1.00, -0.5, 1.0);
         // Moving the artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 1.00, 1.00, -0.5, 1.0);
         // Moves back while still intaking
-        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -600, 1.00, 1.00, -0.5, 0.01);
+
+        //mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -450, 1.00, 1.00, -0.5, 0.01);
+
         //Moves Forward to correct itself
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -600, 1.00, 1.00, -0.5, 0.8);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -450, 1.00, 1.00, -0.5, 0.8);
         // Turn Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -600, 1.00, 1.00, -0.5, 0.65);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -450, 1.00, 1.00, -0.5, 0.65);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 1.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 1.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -600, 0.00, 1.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -450, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -600, 1.00, 0.00, -0.7, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -450, 1.00, 0.00, -0.7, 1.0);
         // Turns Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.4);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -450, 0.00, 0.00, 0.00, 0.4);
         // move left to line up with the artifacts
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -600, 0.00, 0.00, 0.00, 0.6);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -450, 0.00, 0.00, 0.00, 0.6);
         // moving backwards and picking up 3 more
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -600, 0.00, 1.00, -0.5, 1.0);
+        mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, -450, 0.00, 1.00, -0.5, 1.0);
 
 
 
@@ -149,6 +145,7 @@ public class BlueSideAuto extends LinearOpMode {
 
         while(opModeIsActive() && (timer.seconds() <= seconds )) {
 
+            telemetry.update();
             frontRightDrive.setPower(frontRightPower);
             frontLeftDrive.setPower(frontLeftPower);
             backRightDrive.setPower(backRightPower);
@@ -158,6 +155,7 @@ public class BlueSideAuto extends LinearOpMode {
             smallWheel.setPower(smallWheelPower);
             intakePartTwo.setPower(secondIntakePower);
             intakeMotor.setPower(intakePower);
+            telemetry.addData("Seconds", timer.seconds() + "/" + seconds);
 
             YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
             limelight.updateRobotOrientation(orientation.getYaw());
