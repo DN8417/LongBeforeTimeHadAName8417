@@ -78,7 +78,10 @@ public class Blue2GoalAutoPedro extends OpMode {
     public void loop() {
         if (follower != null) {
             follower.update();
-        }
+        }telemetry.addData("X", follower.getPose().getX());
+        telemetry.addData("Y", follower.getPose().getY());
+        telemetry.addData("Heading", Math.toDegrees(follower.getPose().getHeading()));
+        telemetry.update();
     }
 
     // =========================
