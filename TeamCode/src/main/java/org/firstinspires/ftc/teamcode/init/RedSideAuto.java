@@ -95,13 +95,13 @@ public class RedSideAuto extends LinearOpMode {
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 0.00, 0.00, 1.5);
         // Turns Left
@@ -121,13 +121,13 @@ public class RedSideAuto extends LinearOpMode {
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 0.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 0.00, -0.7, 1.0);
         // Turns Left
         mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -550, 0.00, 0.00, 0.00, 0.4);
         // move right to line up with the artifacts

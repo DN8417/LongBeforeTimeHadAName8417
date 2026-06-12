@@ -88,13 +88,13 @@ public class BlueSideFarAuto extends LinearOpMode {
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 0.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 0.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 1.00, 1.00, -0.5, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 1.00, 1.00, -0.5, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.7, 1.0);
+       // mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.7, 1.0);
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 0.00, 0.00, 1.5);
 
@@ -122,13 +122,13 @@ public class BlueSideFarAuto extends LinearOpMode {
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.5, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 1.00, 0.00, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 1.00, 0.00, 1.5);
         // Shooting Second artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.7, 1.0);
         // Charging up to shoot again
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 1.00, 1.00, -0.5, 1.5);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 1.00, 1.00, -0.5, 1.5);
         // Shoots last artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.7, 1.0);
+        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.7, 1.0);
         // moves for leave points
         mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.4);
 
