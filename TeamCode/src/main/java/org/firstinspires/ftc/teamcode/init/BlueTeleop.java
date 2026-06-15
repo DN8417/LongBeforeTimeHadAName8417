@@ -4,10 +4,7 @@ package org.firstinspires.ftc.teamcode.init;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
@@ -39,16 +36,18 @@ public class BlueTeleop extends OpMode {
     private final double GoalHeight = 74.95;
     private double distance = 0;
     boolean mode = true;
+    //hello world
     ElapsedTime swapDelay = new ElapsedTime();
     touchSensor touchsensor = new touchSensor();
     //FieldCentricTest fieldCentric = new FieldCentricTest();
     FlyWheel flyWheel = new FlyWheel();
-    private DcMotorEx turretLauncher;
+
     public double getDistanceFromTage(double Ty) {
-        double angleToGoal = CameraAngle+Ty;
-        double heightDifferance = GoalHeight-CameraHeight;
-        return heightDifferance/Math.tan(Math.toRadians(angleToGoal));
+        double angleToGoal = CameraAngle + Ty;
+        double heightDifferance = GoalHeight - CameraHeight;
+        return heightDifferance / Math.tan(Math.toRadians(angleToGoal));
     }
+
     Light light = new Light();
     WhiteLight whiteLight = new WhiteLight();
 
@@ -68,13 +67,11 @@ public class BlueTeleop extends OpMode {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(1); // april tag #11 pipeline
 
-        imu= hardwareMap.get(IMU.class, "imu");
-        RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
 
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher 1");
-        turretLauncher = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
 
     }
 
@@ -93,19 +90,19 @@ public class BlueTeleop extends OpMode {
     @Override
     public void loop() {
 
-        if(gamepad1.back || gamepad2.back) {
-            if(swapDelay.time() > .75) {
+        if (gamepad1.back || gamepad2.back) {
+            if (swapDelay.time() > .75) {
                 mode = !mode;
                 swapDelay.reset();
             }
         }
 
-        if(mode) {
+        if (mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x/*, gamepad1.right_bumper*/);
             intake.parkingTurretDirection(gamepad1.a, gamepad1.b);
-            //parking.buttonParking(gamepad2.left_stick_y, gamepad1.x);
+            parking.buttonParking(gamepad1.x);
 
             intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);
             intake.startLoading(gamepad2.b);
@@ -117,17 +114,22 @@ public class BlueTeleop extends OpMode {
                     gamepad2.x,
                     distance
             );
+            flyWheel.adjustLowVelocity(gamepad1.dpad_up, gamepad1.dpad_down);//tuning code
+            //intake.launch(gamepad2.right_trigger);
+
             //parking.buttonParking(gamepad2.left_stick_y, gamepad2.x);
 
             mecanumDrive.telemetryOutput();
             parking.telemetryOutput();
+            flyWheel.telemetryOutput();
+
 
         } else if (!mode) {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
             mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x/*, gamepad1.right_bumper*/);
             intake.parkingTurretDirection(gamepad2.a, gamepad2.b);
-            //parking.buttonParking(gamepad1.left_stick_y, gamepad1.x);
+            parking.buttonParking(gamepad2.x);
 
             intake.takeAndGive(gamepad1.right_bumper, gamepad1.left_bumper);
             intake.startLoading(gamepad1.b);
@@ -139,12 +141,15 @@ public class BlueTeleop extends OpMode {
                     gamepad1.x,
                     distance
             );
+            flyWheel.adjustLowVelocity(gamepad2.dpad_up, gamepad1.dpad_down);//tuning code
             //intake.launch(gamepad1.right_trigger);
 
             mecanumDrive.telemetryOutput();
             parking.telemetryOutput();
+            flyWheel.telemetryOutput();
 
         }
+
 
         LLResult llResult = limelight.getLatestResult();
         if (llResult != null && llResult.isValid()) {
@@ -155,8 +160,7 @@ public class BlueTeleop extends OpMode {
         }
 
 
-
-        YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw());
         if (llResult != null && llResult.isValid()) {
             Pose3D botpose = llResult.getBotpose_MT2();
@@ -170,51 +174,39 @@ public class BlueTeleop extends OpMode {
         if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretLeft");
             intake.turretDirection(-0.2);
-        }
-
-        else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
+        } else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
             telemetry.addData("Tx", "TurretRight");
             intake.turretDirection(0.2);
-        }
-
-        else {
+        } else {
             telemetry.addData("Tx", "Good");
             intake.turretDirection(0);
         }
-
-        PIDFCoefficients pidfCoefficients= new PIDFCoefficients(23,0,0,-650);
-        turretLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
 
         telemetry.addData("Tx", "llresult.getTx");
         telemetry.addData("Tx Value", Tx);
 
         if (distance > 2.7) {
+            light.setServoPos(0.0);
+        } else if (distance > 115 && distance < 194) {
             light.setServoPos(0.277);
+        } else {
+            light.setServoPos(0.0);
         }
 
-        else if (distance > 1.28 && distance < 2.7) {
-            light.setServoPos(0.500);
-        }
 
-        else {
-            light.setServoPos(0.388);
-        }
-        if (turretLauncher.getVelocity() > -1250 && flyWheel.getRPM() < -1100) {
-            whiteLight.setServoPos(0.25);
-        }
-
-        else {
+        if (flyWheel.getRPM() < 1250 && flyWheel.getRPM() > 1100) {
+            whiteLight.setServoPos(0.15);
+        } else {
             whiteLight.setServoPos(0.00);
         }
-
 
 
         telemetry.addData("CurrentMode: ", mode ? 0 : 1);
         colorSensor.getDetectedColor(telemetry);
         telemetry.addData("Left Test Sensor Position", touchsensor.leftTouchSensorIsPressed());
         telemetry.addData("Right Test Sensor Position", touchsensor.rightTouchSensorIsPressed());
+        telemetry.addData("Endgame Sensor is Pressed", touchsensor.endgameTouchSensorPressed());
         telemetry.addData("Current RPM", flyWheel.getRPM());
-
 
 
 

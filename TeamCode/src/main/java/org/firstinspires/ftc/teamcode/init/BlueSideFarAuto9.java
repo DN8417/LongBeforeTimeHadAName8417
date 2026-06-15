@@ -13,33 +13,37 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.action.touchSensor;
 
-@Autonomous(name="Red Goal Zone", group ="Autos")
-public class RedSideAuto extends LinearOpMode {
+@Autonomous(name="Blue Far Zone 9", group ="Autos")
+public class BlueSideFarAuto9 extends LinearOpMode {
 
     public DcMotor frontRightDrive;
     public DcMotor frontLeftDrive;
     public DcMotor backRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor rubberBandWheel;
-    public DcMotorEx m1;
-    public DcMotorEx m2;
+    public DcMotorEx m1, m2;
     public CRServo smallWheel;
     public CRServo intakePartTwo;
     public DcMotor intakeMotor;
     private IMU imu;
+    private double encoderCPM = 28;
+    private double gearRatio = 3 / 2;
+    private double kV = 0.000171, kS = 0.09, kP = 0.0009;
+    public double lowVelocity = 3250;
+    public double highVelocity = 4565;
+    private double targetRpm = highVelocity;
+    Telemetry telemetry;
+    boolean lastX = false;
     private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
     private CRServo turretMotor;
-    private final double kV = 0.000171;
-    private final double kS = 0.09;
-    private final double kP = 0.0009;
-    public double lowVelocity = 3250;
-    public double highVelocity = 4750;
+
 
     public ElapsedTime timer = new ElapsedTime();
 
@@ -52,7 +56,7 @@ public class RedSideAuto extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "Back Left");
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         m1 = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
-        //m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
+        m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
@@ -63,13 +67,10 @@ public class RedSideAuto extends LinearOpMode {
         rubberBandWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //m1.setDirection(DcMotor.Direction.REVERSE);
-        //m2.setDirection(DcMotor.Direction.REVERSE);
-
         touchsensor.init(this);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(0); // april tag #11 pipeline
+        limelight.pipelineSwitch(1); // april tag #11 pipeline
 
         imu= hardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -82,42 +83,58 @@ public class RedSideAuto extends LinearOpMode {
         waitForStart();
         limelight.start();
 
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -550, 0.00, 0.00, 0.00, 0.5);
-
-        // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 0.00, 0.00, 2.6);
-        // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 0.00, -0.5, 1.0);
+        // Giving the turret time to charge up
+        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0.00, 350, 0.00, 0.00, 0.00, 3.0);
+        // Shooting artifacts
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 0.00, -0.5, 1.0);
         // Stalling a bit
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 0.00, 0.00, 1.5);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 0.00, 0.00, 1.5);
 
-        // Turns Left
-        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -550, 0.00, 0.00, 0.00, 0.5);
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0, 0, 0, 0, 0, 0.45);
-        // Moves forward and intakes more artifacts
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -550, 1.00, 1.00, -0.5, 1.8);
-        // Moving the artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 1.00, 1.00, -0.5, 1.2);
+        // Moving Forward so we don't scrape the wall
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.3);
+        // Turns right
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.37);
+        // Moves back into the wall
+        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.5);
+        // Moves Backwards while intaking
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, 350, 0.00, 1.00, -0.5, 2.9);
+        // Moving artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 1.00, 1.00, -0.5, 2.1);
 
-        // Moves back while still intaking
-        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -550, 1.00, 1.00, -0.5, 0.001);
-        //Moves Forward to correct itself
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -550, 1.00, 1.00, -0.5, 0.8);
-        // Turn Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -550, 1.00, 1.00, -0.5, 0.47);
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0, 0, 1, 1, -0.5, 0.2);
+        // Moving back into position
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.9);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.2);
+        mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.27);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.2);
 
-        // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -550, 0.00, 1.00, 0.00, 1.3);
+        // Stalling after movement
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, 350, 0.00, 1.00, 0.00, 1.0);
         // Shooting first artifact
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -550, 1.00, 1.00, -0.5, 1.0);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, 350, 1.00, 1.00, -0.5, 1.0);
 
-        // Turns Left
-        //mecanumDrive(0.75, -0.75, 0.75, -0.75, 0.00, -550, 0.00, 0.00, 0.00, 0.4);
-        // move right to line up with the artifacts
-        //mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -550, 0.00, 0.00, 0.00, 0.6);
-        // moving backwards and picking up 3 more
-        //mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, -550, 0.00, 1.00, -0.5, 1.0);
+        // Drive forward to line up with artifacts
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0, -200, 0, 0, 0, 0.5);
+        // Turn Right
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0, -200, 0, 0, 0, 0.35);
+
+        // Moves Backwards while intaking
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0, -200, 0.00, 1.00, -0.5, 2.3);
+        // Moving artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0, -200, 1.00, 1.00, -0.5, 2.0);
+
+        // Moving back into position
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0, -200, 0, 0, 0, 1);
+        mecanumDrive( 0.75, -0.75, 0.75, -0.75, 0, -200, 0, 0, 0, 0.3);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0, -200, 0, 0, 0, 0.5);
+
+        // Giving the turret time to charge up
+        mecanumDrive(0.00, 0.00, 0.00, 00.0, 0, -200, 0.00, 0.00, 0.00, 1.5);
+        // Shooting artifacts
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -200, 1.00, 0.00, -0.5, 0.8);
+
+        // moves for leave points
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, 350, 0.00, 0.00, 0.00, 0.5);
+
 
     }
 
@@ -134,7 +151,16 @@ public class RedSideAuto extends LinearOpMode {
             backRightDrive.setPower(backRightPower);
             backLeftDrive.setPower(backLeftPower);
             rubberBandWheel.setPower(rubberBandPower);
-            m1.setVelocity(-425);
+            targetRpm = highVelocity;
+            double getTicksPerSec = m1.getVelocity();
+            double getRPM = ((getTicksPerSec / encoderCPM) * 60) / gearRatio;
+            double error = targetRpm - getRPM;
+            double ff = (kV * targetRpm) + kS;
+            double fb = error * kP;
+            double power = ff + fb;
+            m1.setPower(power);
+            m2.setPower(power);
+            //m1.setVelocity(launcherVelocity);
             //m2.setVelocity(launcherVelocity);
             smallWheel.setPower(smallWheelPower);
             intakePartTwo.setPower(secondIntakePower);
@@ -146,30 +172,29 @@ public class RedSideAuto extends LinearOpMode {
             if (llResult != null && llResult.isValid()) {
                 Pose3D botpose = llResult.getBotpose_MT2();
                 //distance = getDistanceFromTage(llResult.getTa());
-                telemetry.addData("distance", distance);
-                telemetry.addData("Tx", llResult.getTx());
-                telemetry.addData("Ta", llResult.getTa());
+//                telemetry.addData("distance", distance);
+//                telemetry.addData("Tx", llResult.getTx());
+//                telemetry.addData("Ta", llResult.getTa());
 
             }
             double Tx = llResult.getTx();
 
             if (Tx < -3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretLeft");
+                //telemetry.addData("Tx", "TurretLeft");
                 turretMotor.setPower(-0.2);
             }
 
             else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed()) {
-                telemetry.addData("Tx", "TurretRight");
+                //telemetry.addData("Tx", "TurretRight");
                 turretMotor.setPower(0.2);
             }
 
             else {
-                telemetry.addData("Tx", "Good");
+                //telemetry.addData("Tx", "Good");
                 turretMotor.setPower(0);
             }
 
         }
 
-        }
-
     }
+}
