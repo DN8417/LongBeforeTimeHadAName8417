@@ -28,17 +28,20 @@ public class BlueSideAuto extends LinearOpMode {
     public DcMotor backRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor rubberBandWheel;
-    public DcMotorEx m1;
+    public DcMotorEx m1, m2;
     public CRServo smallWheel;
     public CRServo intakePartTwo;
     public DcMotor intakeMotor;
     private IMU imu;
-    private double distance;
-    private final double kV = 0.000171;
-    private final double kS = 0.09;
-    private final double kP = 0.0009;
+    private double encoderCPM = 28;
+    private double gearRatio = 3 / 2;
+    private double kV = 0.000171, kS = 0.09, kP = 0.0009;
     public double lowVelocity = 3250;
-    public double highVelocity = 4750;
+    public double highVelocity = 4565;
+    private double targetRpm = lowVelocity;
+    //Telemetry telemetry;
+    //boolean lastX = false;
+    private double distance;
     private Limelight3A limelight;
     touchSensor touchsensor = new touchSensor();
     private CRServo turretMotor;
@@ -54,6 +57,7 @@ public class BlueSideAuto extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "Back Left");
         rubberBandWheel = hardwareMap.get(DcMotor.class, "Rubber Band Wheel");
         m1 = hardwareMap.get(DcMotorEx.class, "Turret Launcher");
+        m2 = hardwareMap.get(DcMotorEx.class, "Turret Launcher 2");
         smallWheel = hardwareMap.get(CRServo.class, "Small Wheel");
         intakeMotor = hardwareMap.get(DcMotor.class, "Intake");
         intakePartTwo = hardwareMap.get(CRServo.class, "Second Intake");
@@ -67,7 +71,7 @@ public class BlueSideAuto extends LinearOpMode {
         touchsensor.init(this);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(1); // april tag #11 pipeline
+        limelight.pipelineSwitch(2); // april tag #11 pipeline
 
         imu= hardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot revHubOrientationOnRobot= new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
@@ -81,53 +85,69 @@ public class BlueSideAuto extends LinearOpMode {
         limelight.start();
 
         // Moves backward into position
-        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -400, 0.00, 0.00, 0.00, 0.5);
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0.00, -400, 0.00, 0.00, 0.00, 0.48);
         // Buffer time before shooting
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 0.00, 0.00, 1.2);
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 0.00, 0.00, 2.0);
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -400, 1.00, 0.00, -0.5, 1.0);
-        // Charging up to shoot again
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
-        // Shooting Second artifact
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -400, 1.00, 1.00, -0.7, 1.0);
+
         // Stalling a bit
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
+        // Moving Back
+        mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0, 0, 0, 0,0, 0.2);
         // Moves left
-        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.4);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.2);
         // Turns Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.55);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.5);
         // Moves left to not hit the gate
-        mecanumDrive(-0.5, 0.5, 0.5, -0.5, 0.00, -400, 0.00, 1.00, 0.00, 0.05);
-        // Moves forward and intakes more artifacts
-        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -400, 1.00, 1.00, -0.5, 1.0);
-        // Moving the artifacts along the intake
-        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 1.00, 1.00, -0.5, 1.0);
-        // Moves back while still intaking
+        mecanumDrive(-0.5, 0.5, 0.5, -0.5, 0.00, -400, 0.00, 1.00, 0.00, 0.1);
 
-        mecanumDrive(0.01, 0.01, 0.01, 0.01, 0.00, -400, 1.00, 1.00, -0.5, 0.01);
+        // Moves forward and intakes more artifacts
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -400, 1.00, 1.00, -0.5, 2);
+        // Moving the artifacts along the intake
+        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 1.00, 1.00, -0.5, 1.5);
+
+        mecanumDrive(0.3, 0.3, 0.3, 0.3, 0, 0, 0, 0, 0, 0.5);
+        mecanumDrive(-0.3, 0.3, 0.3, -0.3, 0, 0, 0, 0, 0, 0.3);
+        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0,0 ,0 ,0, 0, 0.6);
+
+        mecanumDrive(0,0 ,0 ,0 ,0,0 ,0 ,0  ,0, 7);
 
         //Moves Forward to correct itself
-        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -400, 1.00, 1.00, -0.5, 0.8);
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -400, 1.00, 1.00, -0.5, 0.9);
         // Turn Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 1.00, 1.00, -0.5, 0.65);
+        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 1.00, 1.00, -0.5, 0.85);
+        // Moves Forward to stay on our side
+        mecanumDrive(0.75, 0.75, 0.75, 0.75, 0.00, -400, 1.00, 1.00, -0.5, 0.2);
         // Buffer time before shooting
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
         // Shooting first artifact
         mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -400, 1.00, 1.00, -0.5, 1.0);
-        // Charging up to shoot again
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
-        // Shooting Second artifact
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -400, 1.00, 1.00, -0.7, 1.0);
-        // Charging up to shoot again
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
-        // Shoots last artifact
-        //mecanumDrive(0.00, 0.00, 0.00, 0.00, 1.00, -400, 1.00, 0.00, -0.7, 1.0);
-        // Turns Right
-        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 0.00, 0.00, 0.00, 0.5);
-        // moving backwards and picking up 3 more
-        mecanumDrive(-0.5, -0.5, -0.5, -0.5, 0.00, -400, 0.00, 1.00, -0.5, 1.0);
 
+//        // Stalling a bit
+//        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 0.00, 1.00, 0.00, 1.5);
+//        // Moves left
+//        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.4);
+//        // Turns Right
+//        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.58);
+//        // Moves right to hit the gate
+//        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0.00, -400, 0.00, 1.00, 0.00, 0.5);
+//
+//        // Moves forward and intakes more artifacts
+//        mecanumDrive(-0.3, -0.3, -0.3, -0.3, 0.00, -400, 1.00, 1.00, -0.5, 1.9);
+//        // Moving the artifacts along the intake
+//        mecanumDrive(0.00, 0.00, 0.00, 0.00, 0.00, -400, 1.00, 1.00, -0.5, 1.5);
 
+        //mecanumDrive(0,0 ,0 ,0 ,0,0 ,0 ,0  ,0, 3.5);
+
+        //mecanumDrive(-0.75, 0.0, -0.75, 0.0, 0, 0, 0, 0, 0, 0.2);
+        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0, 0, 0, 0, 0, 0.4);
+
+        //mecanumDrive(-0.75, -0.75, -0.75, -0.75, 0, 0, 0, 0, 0, 0.2);
+//        mecanumDrive(-0.75, 0.75, -0.75, 0.75, 0,0,0,0,0, 0.3);
+//        mecanumDrive(0.75, -0.75, -0.75, 0.75, 0, 0, 0, 0, 0, 2);
+//        mecanumDrive(0, 0,0 ,0 ,0 ,0 ,0 ,0 ,0, 5);
+//        mecanumDrive(-0.75, 0.75, 0.75, -0.75, 0, 0, 0, 0, 0, 0.5);
 
     }
 
@@ -139,17 +159,26 @@ public class BlueSideAuto extends LinearOpMode {
 
         while(opModeIsActive() && (timer.seconds() <= seconds )) {
 
-            telemetry.update();
+            //telemetry.update();
             frontRightDrive.setPower(frontRightPower);
             frontLeftDrive.setPower(frontLeftPower);
             backRightDrive.setPower(backRightPower);
             backLeftDrive.setPower(backLeftPower);
             rubberBandWheel.setPower(rubberBandPower);
-            m1.setVelocity(launcherVelocity);
+            targetRpm = lowVelocity;
+            double getTicksPerSec = m1.getVelocity();
+            double getRPM = ((getTicksPerSec / encoderCPM) * 60) / gearRatio;
+            double error = targetRpm - getRPM;
+            double ff = (kV * targetRpm) + kS;
+            double fb = error * kP;
+            double power = ff + fb;
+            m1.setPower(power);
+            m2.setPower(power);
+            //m1.setVelocity(-300);
             smallWheel.setPower(smallWheelPower);
             intakePartTwo.setPower(secondIntakePower);
             intakeMotor.setPower(intakePower);
-            telemetry.addData("Seconds", timer.seconds() + "/" + seconds);
+            //telemetry.addData("Seconds", timer.seconds() + "/" + seconds);
 
             YawPitchRollAngles orientation= imu.getRobotYawPitchRollAngles();
             limelight.updateRobotOrientation(orientation.getYaw());
@@ -157,25 +186,25 @@ public class BlueSideAuto extends LinearOpMode {
             if (llResult != null && llResult.isValid()) {
                 Pose3D botpose = llResult.getBotpose_MT2();
                 //distance = getDistanceFromTage(llResult.getTa());
-                telemetry.addData("distance", distance);
-                telemetry.addData("Tx", llResult.getTx());
-                telemetry.addData("Ta", llResult.getTa());
+//                telemetry.addData("distance", distance);
+//                telemetry.addData("Tx", llResult.getTx());
+//                telemetry.addData("Ta", llResult.getTa());
 
             }
             double Tx = llResult.getTx();
 
             if (Tx < -3 && !touchsensor.rightTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
-                telemetry.addData("Tx", "TurretLeft");
+                //telemetry.addData("Tx", "TurretLeft");
                 turretMotor.setPower(-0.2);
             }
 
             else if (Tx > 3 && !touchsensor.leftTouchSensorIsPressed() && llResult != null && llResult.isValid()) {
-                telemetry.addData("Tx", "TurretRight");
+                //telemetry.addData("Tx", "TurretRight");
                 turretMotor.setPower(0.2);
             }
 
             else {
-                telemetry.addData("Tx", "Good");
+                //telemetry.addData("Tx", "Good");
                 turretMotor.setPower(0);
             }
 

@@ -101,7 +101,7 @@ public class Teleop extends OpMode {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad1.left_bumper);
             mecanumDrive.setPower(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x/*, gamepad1.right_bumper*/);
-            intake.parkingTurretDirection(gamepad1.a, gamepad1.b);
+            intake.turretDirection(gamepad2.right_stick_x);
             parking.buttonParking(gamepad1.x);
 
             intake.takeAndGive(gamepad2.right_bumper, gamepad2.left_bumper);
@@ -128,7 +128,7 @@ public class Teleop extends OpMode {
             //Controls for mecanumDrive()
             mecanumDrive.slowMode(gamepad2.left_bumper);
             mecanumDrive.setPower(gamepad2.left_stick_x, gamepad2.left_stick_y, gamepad2.right_stick_x/*, gamepad1.right_bumper*/);
-            intake.parkingTurretDirection(gamepad2.a, gamepad2.b);
+            intake.turretDirection(gamepad1.right_stick_x);
             parking.buttonParking(gamepad2.x);
 
             intake.takeAndGive(gamepad1.right_bumper, gamepad1.left_bumper);

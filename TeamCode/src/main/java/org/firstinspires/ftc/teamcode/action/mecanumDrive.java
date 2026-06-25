@@ -65,7 +65,7 @@ public class mecanumDrive {
      * @param enable True if you want to enable slow-mode. False if not.
      */
     public void slowMode(Boolean enable) {
-        slowSpeed = enable ? 1.50 : 0.50;
+        slowSpeed = enable ? 1.50 : 0.75;
     }
 
 
